@@ -92,8 +92,9 @@ export default function ScrollFilm({
     (async () => {
       if (sequence) {
         const size = pickSize(sequence.sizes);
-        const order = progressiveOrder(sequence.count);
-        st.imgs = new Array(sequence.count).fill(null);
+        const files = sequence.per > 1 ? sequence.atlases : sequence.count; // mosaicos de `per` quadros
+        const order = progressiveOrder(files);
+        st.imgs = new Array(files).fill(null);
         let done = 0, i = 0;
         const worker = async () => {
           while (!cancelled && i < order.length) {
@@ -126,11 +127,13 @@ export default function ScrollFilm({
   // ---------- janela de quadros decodificados ----------
   // Decodificar todos os quadros passaria de 500 MB e o navegador descomprimiria de novo a cada desenho (4 fps).
   // Mantém só ~2×W quadros prontos (ImageBitmap, decodificados fora da thread principal) em volta da posição atual.
-  const decodeWindow = (center) => {
+  const decodeWindow = (centerFrame) => {
     const st = state.current;
+    const per = sequence?.per > 1 ? sequence.per : 1;
+    const center = Math.floor(centerFrame / per); // índice do arquivo (mosaico)
     st.center = center;
     const n = st.imgs.length;
-    const W = window.innerWidth <= 650 ? 10 : 14, KEEP = W + 8;
+    const W = Math.max(2, Math.ceil((window.innerWidth <= 650 ? 10 : 14) / per)), KEEP = W + Math.ceil(8 / per);
     for (const [i, b] of st.bmps) if (Math.abs(i - center) > KEEP) { b.close?.(); st.bmps.delete(i); }
     if (typeof createImageBitmap !== 'function') return;
     for (let d = 0; d <= W; d++) {
@@ -155,23 +158,29 @@ export default function ScrollFilm({
     const cw = canvas.width, ch = canvas.height;
     const p = st.shown;
     if (sequence) {
-      const n = st.imgs.length; if (!n) return;
+      if (!st.imgs.length) return;
+      const n = sequence.count, per = sequence.per > 1 ? sequence.per : 1, cols = sequence.cols || 1, rows = Math.ceil(per / cols);
       const f = p * (n - 1), i0 = Math.floor(f), frac = f - i0;
       decodeWindow(i0);
-      // desenha a partir de quadros já decodificados (ImageBitmap); se o exato ainda não está pronto, usa o mais próximo pronto
       const bm = st.bmps;
-      let src = bm.get(i0), exact = !!src;
-      if (!src) { for (let d = 1; d < 24 && !src; d++) src = bm.get(i0 - d) || bm.get(i0 + d); }
-      if (!src) return; // nada decodificado por perto ainda: mantém o último quadro na tela; o bitmap chega em seguida
-      const w = src.width, h = src.height;
+      // quadro i → [bitmap do mosaico, sx, sy, sw, sh]; null se o mosaico ainda não foi decodificado
+      const frame = (i) => {
+        if (i < 0 || i >= n) return null;
+        const b = bm.get(Math.floor(i / per)); if (!b) return null;
+        const s = i % per, fw = b.width / cols, fh = b.height / rows;
+        return [b, (s % cols) * fw, Math.floor(s / cols) * fh, fw, fh];
+      };
+      let cur = frame(i0); const exact = !!cur;
+      for (let d = 1; d < 24 && !cur; d++) cur = frame(i0 - d) || frame(i0 + d);
+      if (!cur) return; // nada decodificado por perto: mantém o último quadro na tela; o bitmap chega em seguida
       const fp = sequence.focus || [0.5, 0.5];
-      const r = coverRect(w, h, cw, ch, fp[0], fp[1], 1);
+      const r = coverRect(cur[3], cur[4], cw, ch, fp[0], fp[1], 1);
       ctx.globalAlpha = 1;
-      ctx.drawImage(src, ...r);
-      const next = bm.get(i0 + 1);
-      if (exact && next && frac > 0.02) { // mistura com o quadro seguinte: movimento contínuo
+      ctx.drawImage(cur[0], cur[1], cur[2], cur[3], cur[4], ...r);
+      const next = exact && frac > 0.02 ? frame(i0 + 1) : null;
+      if (next) { // mistura com o quadro seguinte: movimento contínuo
         ctx.globalAlpha = frac;
-        ctx.drawImage(next, ...r);
+        ctx.drawImage(next[0], next[1], next[2], next[3], next[4], ...r);
         ctx.globalAlpha = 1;
       }
       return;

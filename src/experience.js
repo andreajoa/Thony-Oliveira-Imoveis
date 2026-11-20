@@ -8,6 +8,7 @@ const pad = (i) => String(i).padStart(4, '0');
 // manifesto gerado por montar_seq.py: { count, sizes, stops (posição de cada quadro-chave), focus }
 const seq = (dir, m, focus) => (m && m.count > 0 ? {
   count: m.count, sizes: m.sizes, focus: focus || m.focus, stops: m.stops,
+  per: m.per || 1, cols: m.cols || 1, atlases: m.atlases || m.count, // mosaicos 2×2 (4 quadros por arquivo)
   src: (i, size) => `/experience/${dir}/seq/${size}/${pad(i)}.webp`,
 } : null);
 
