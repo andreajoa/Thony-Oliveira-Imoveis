@@ -10,12 +10,9 @@
     "check": "npm run build"
   },
   "dependencies": {
-    "@react-three/fiber": "^9.3.0",
-    "gsap": "^3.13.0",
     "lucide-react": "^0.468.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "three": "^0.178.0"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",

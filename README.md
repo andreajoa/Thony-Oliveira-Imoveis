@@ -9,11 +9,11 @@ Protótipo navegável, editorial e responsivo para uma futura plataforma imobili
 ## O que funciona
 
 - **Home premium:** hero arquitetônico, busca filtrável, cartões demonstrativos e links de exploração.
-- **Visita imersiva 3D:** cena procedural com fachada, sala, cozinha e suíte. A câmera avança com o scroll e recua ao inverter a rolagem.
-- **Construção 3D por scroll:** terreno → fundação → paredes → cobertura → acabamento, também reversível.
+- **Visita imersiva (scroll = linha do tempo):** fotos e vídeo fotorrealistas avançam quadro a quadro com a rolagem — fachada → hall → sala → cozinha → suíte → sai pelo deck/piscina → vista aérea, e o site continua. Rolar para cima faz o caminho inverso. Miniplanta mostra o cômodo atual.
+- **Terreno → casa de 2 andares:** a mesma câmera acompanha terreno vazio ("Você batalhou."), fundação, estrutura, paredes, acabamento e a casa pronta ("Você conquistou. Agora é só morar."), com planta que se desenha e % da obra.
 - **15 páginas estáticas de busca:** cada categoria tem HTML completo, título, meta description, texto informativo, FAQ e navegação interna.
 - **Pesquisa SEO:** script e CSV com sugestões reais extraídas do Google Suggest (41 consultas iniciais; atualizar com o script).
-- **Sem backend:** usa Vite + React + Three.js + React Three Fiber + GSAP ScrollTrigger. Output estático e pronto para hospedagem.
+- **Sem backend:** Vite + React; as experiências são um canvas 2D leve (`src/components/ScrollFilm.jsx`), sem WebGL. Output estático e pronto para hospedagem.
 
 ## Requisitos
 
@@ -30,15 +30,12 @@ npm run build
 
 ## Deploy na NexaCloud
 
-Configure:
-- Root directory: raiz do repositório
-- Install command: `npm ci` (ou `npm install` se não houver lockfile)
-- Build command: `npm run build`
-- Publish/Output directory: `dist`
-- Tipo: **site estático**, sem servidor Node em produção
-- Se houver regra de redirect de SPA, **não redirecione tudo para /index.html**: existem rotas estáticas reais `/explorar/.../index.html`.
+Publicado em **https://thony-oliveira-imoveis.nexaclouds.online** (projeto `thony-oliveira-imoveis`, preset Vite, Node 22).
+O workflow `.github/workflows/nexacloud.yml` (gerado pelo NexaCloud) roda a cada push no `main`: `npm ci` → `npm run build` → envia `dist/`.
+Pull requests ganham prévia própria. Variável de produção: `SITE_URL` (canônicas e sitemap das páginas de SEO).
 
-As páginas estáticas foram geradas para SEO. Experiências 3D dependem de WebGL; o conteúdo de navegação e as páginas informativas não dependem dele.
+Limites do NexaCloud por deploy: 1000 arquivos, 25 MB por arquivo, 95 MB no total — as sequências de quadros foram dimensionadas para caber com folga.
+Não redirecione tudo para `/index.html`: existem rotas estáticas reais `/explorar/.../index.html`.
 
 ## DEMO MODE: proteção contra anúncios fictícios
 
@@ -76,14 +73,23 @@ Evite criar páginas repetidas trocando uma palavra. A estratégia atual usa **p
 
 - Direção editorial inspirada na referência em vídeo enviada pelo solicitante.
 - Fotografias de inspiração arquitetônica do Unsplash (`images.unsplash.com`), todas identificadas como imagens ilustrativas.
-- Cenas 3D criadas com geometrias procedurais e materiais em tempo real. **Não são modelos 3D de imóveis à venda**.
+- Visita e obra: quadros-chave gerados por IA (Google Flow · Nano Banana) e vídeos com quadro inicial/final (Flow · Omni 1.2 Flash 720p), identificados no site como ilustrativos. **Não são imóveis à venda.**
+
+## Como a mídia das experiências é produzida
+
+1. Quadros-chave 16:9 no Flow; as etapas da obra são edições da mesma foto (mesma câmera).
+2. Vídeo de 10 s entre cada par de quadros (início → fim).
+3. Quadros extraídos e convertidos em WebP (`public/experience/<tour|build>/seq/<largura>/0000.webp`), carregados em ordem progressiva (1 a cada 16 → todos). Sem a sequência, o site usa os quadros-chave com transição.
 
 ## Estrutura
 
 ```
 src/App.jsx                         Home + busca demonstrativa
-src/components/HouseTour.jsx        Visita 3D reversível
-src/components/HouseBuild.jsx       Obra 3D reversível
+src/components/ScrollFilm.jsx       Motor: rolagem → quadro (sequência de vídeo ou quadros-chave), parallax do ponteiro, capítulos
+src/components/HouseTour.jsx        Visita imersiva (7 capítulos + miniplanta)
+src/components/HouseBuild.jsx       Terreno → casa de 2 andares (6 etapas + planta + % da obra)
+src/experience.js                   Onde ficam as imagens/sequências de cada experiência
+public/experience/                  Quadros-chave (stills) e sequências de vídeo em WebP
 src/styles.css                      Design system responsivo
 scripts/generate-pages.mjs          15 páginas SEO estáticas
 scripts/coletar-sugestoes.py        Coleta de autocomplete
