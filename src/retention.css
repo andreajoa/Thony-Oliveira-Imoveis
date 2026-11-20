@@ -24,11 +24,17 @@
 .section-rail:focus-within .rail-label{max-width:140px;opacity:1}
 @media(max-width:1180px){.section-rail{display:none}}
 
-/* ---------- barra de contato fixa (celular) ---------- */
-.sticky-cta{position:fixed;z-index:60;left:12px;right:12px;bottom:12px;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.8,.2,1);display:none}
-.sticky-cta.on{transform:none}
-.sticky-cta a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;background:#17382e;color:#fff;font-size:11px;font-weight:800;letter-spacing:.12em;box-shadow:0 14px 40px rgba(10,30,22,.35)}
-@media(max-width:900px){.sticky-cta{display:block}}
+/* ---------- WhatsApp flutuante ---------- */
+.wa-float{position:fixed;z-index:65;right:20px;bottom:20px;display:flex;align-items:center;gap:12px;padding:10px 20px 10px 10px;border-radius:999px;background:#1fa855;color:#fff;box-shadow:0 14px 34px rgba(10,60,30,.32),0 2px 6px rgba(0,0,0,.12);transition:transform .3s cubic-bezier(.2,.8,.2,1),bottom .45s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.wa-float:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(10,60,30,.4)}
+.wa-float svg{width:40px;height:40px;padding:8px;border-radius:50%;background:#fff;fill:#1fa855;flex:0 0 auto}
+.wa-float::before{content:'';position:absolute;left:10px;top:10px;width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 0 rgba(255,255,255,.55);animation:waPulse 2.6s ease-out infinite}
+@keyframes waPulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.5)}70%,100%{box-shadow:0 0 0 14px rgba(255,255,255,0)}}
+.wa-label{display:flex;flex-direction:column;line-height:1.15}
+.wa-label small{font-size:8.5px;letter-spacing:.16em;font-weight:800;opacity:.85}
+.wa-label b{font-size:15px;font-weight:700}
+@media(max-width:900px){.wa-float{right:14px;bottom:16px;padding:8px}.wa-float svg{width:44px;height:44px;padding:9px}.wa-float::before{left:8px;top:8px;width:44px;height:44px}.wa-label{display:none}.wa-float.raised{bottom:150px}}
+@media(prefers-reduced-motion:reduce){.wa-float::before{animation:none}}
 
 /* ---------- trilho horizontal (imóveis) ---------- */
 .h-rail-track{display:flex;gap:30px;will-change:transform}
@@ -77,3 +83,6 @@
 .hero-loop{display:block;font-size:9px;letter-spacing:.2em;font-weight:800;color:#e7cda8;margin-bottom:8px}
 
 @media(prefers-reduced-motion:reduce){.hero-right img.hero-door{transform:none}}
+
+/* hero: abre espaço para o botão do WhatsApp no canto inferior direito */
+@media(min-width:901px){.hero .hero-right .hero-image-caption{bottom:110px}.hero .hero-right .hero-image-legal{right:auto;left:clamp(24px,3.5vw,65px)}}
