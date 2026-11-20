@@ -2,6 +2,10 @@
 
 Protótipo navegável, editorial e responsivo para uma futura plataforma imobiliária voltada a **Goiânia e região**. Criado para demonstração na NexaCloud.
 
+## Prévia visual
+
+![Prévia real da página inicial](docs/preview-home.png)
+
 ## O que funciona
 
 - **Home premium:** hero arquitetônico, busca filtrável, cartões demonstrativos e links de exploração.
