@@ -34,7 +34,7 @@ Publicado em **https://thony-oliveira-imoveis.nexaclouds.online** (projeto `thon
 O workflow `.github/workflows/nexacloud.yml` (gerado pelo NexaCloud) roda a cada push no `main`: `npm ci` → `npm run build` → envia `dist/`.
 Pull requests ganham prévia própria. Variável de produção: `SITE_URL` (canônicas e sitemap das páginas de SEO).
 
-Limites do NexaCloud por deploy: 1000 arquivos, 25 MB por arquivo, 95 MB no total — as sequências de quadros foram dimensionadas para caber com folga.
+Limites do NexaCloud por deploy: 25 MB por arquivo e 95 MB no total; na prática, acima de ~490 arquivos o envio falha (500). Por isso as sequências vão em mosaicos 2×2 (4 quadros por arquivo): ~243 arquivos no total.
 Não redirecione tudo para `/index.html`: existem rotas estáticas reais `/explorar/.../index.html`.
 
 ## DEMO MODE: proteção contra anúncios fictícios
