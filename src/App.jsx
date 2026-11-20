@@ -1,7 +1,17 @@
-import React,{useEffect,useMemo,useState} from 'react';
+import React,{lazy,Suspense,useEffect,useMemo,useRef,useState} from 'react';
 import {ArrowDown,ArrowRight,ArrowUpRight,BedDouble,Building2,Check,ChevronDown,Compass,Heart,Home,Instagram,MapPin,Menu,MoveUpRight,Phone,Search,ShieldCheck,SlidersHorizontal,TreePine,X} from 'lucide-react';
-import HouseTour from './components/HouseTour.jsx';
-import HouseBuild from './components/HouseBuild.jsx';
+const HouseTour=lazy(()=>import('./components/HouseTour.jsx'));
+const HouseBuild=lazy(()=>import('./components/HouseBuild.jsx'));
+function Lazy3D({Component,kind}){
+ const container=useRef(null),[visible,setVisible]=useState(false);
+ useEffect(()=>{
+  if(!('IntersectionObserver' in window)){setVisible(true);return;}
+  const observer=new IntersectionObserver((entries)=>{if(entries[0]?.isIntersecting){setVisible(true);observer.disconnect();}},{rootMargin:'1100px 0px'});
+  if(container.current)observer.observe(container.current);
+  return()=>observer.disconnect();
+ },[]);
+ return <div ref={container}><Suspense fallback={<div className={'lazy-scene-placeholder '+kind}><span>Preparando experiência 3D...</span></div>}>{visible?<Component/>:<div className={'lazy-scene-placeholder '+kind} aria-hidden="true"/>}</Suspense></div>;
+}
 
 const demoMode=import.meta.env.VITE_DEMO_MODE!=='false';
 const wa=(import.meta.env.VITE_WHATSAPP_NUMBER||'').replace(/\D/g,'');
@@ -90,5 +100,5 @@ export default function App(){
  const initial={intent:'Comprar',type:'Todos',district:'Todas',beds:'Qualquer'};
  const [filters,setFilters]=useState(initial),[applied,setApplied]=useState(initial);
  const apply=()=>{setApplied({...filters});document.getElementById('imoveis')?.scrollIntoView({behavior:'smooth'});};
- return <><Header/><main><Hero/><Finder onApply={apply} onReset={()=>{setFilters(initial);setApplied(initial)}} filters={filters} setFilters={setFilters}/><Listings filters={filters} applied={applied} setFilters={setFilters}/><div className="between-3d"><span>ALÉM DAS FOTOS. UMA NOVA PERSPECTIVA.</span><ArrowDown size={16}/><span>02 — EXPERIMENTE O ESPAÇO</span></div><HouseTour/><Categories/><div className="between-build"><span>O SEU SONHO AINDA NÃO FOI CONSTRUÍDO?</span><span>DESCUBRA O POTENCIAL DE UM TERRENO <ArrowDown size={15}/></span></div><HouseBuild/><About/><KeywordDirectory/><FAQ/></main><Footer/></>;
+ return <><Header/><main><Hero/><Finder onApply={apply} onReset={()=>{setFilters(initial);setApplied(initial)}} filters={filters} setFilters={setFilters}/><Listings filters={filters} applied={applied} setFilters={setFilters}/><div className="between-3d"><span>ALÉM DAS FOTOS. UMA NOVA PERSPECTIVA.</span><ArrowDown size={16}/><span>02 — EXPERIMENTE O ESPAÇO</span></div><Lazy3D Component={HouseTour} kind="tour"/><Categories/><div className="between-build"><span>O SEU SONHO AINDA NÃO FOI CONSTRUÍDO?</span><span>DESCUBRA O POTENCIAL DE UM TERRENO <ArrowDown size={15}/></span></div><Lazy3D Component={HouseBuild} kind="build"/><About/><KeywordDirectory/><FAQ/></main><Footer/></>;
 }

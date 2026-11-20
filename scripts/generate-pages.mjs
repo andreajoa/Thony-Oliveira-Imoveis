@@ -21,6 +21,18 @@ const data=[
  ['imoveis-setor-oeste-goiania','Imóveis no Setor Oeste em Goiânia','Saiba como buscar imóveis no Setor Oeste em Goiânia e comparar apartamentos e casas por localização e comodidades.','No Setor Oeste, observe as características dos prédios, comércio, circulação de veículos e idade das instalações, além das condições de manutenção.','Localização central exige atenção ao entorno e aos custos.','apto-2.jpg']
 ];
 const escapeHtml=t=>String(t).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const homeFile=path.join(output,'index.html');
+if(fs.existsSync(homeFile)){
+  let homeHtml=fs.readFileSync(homeFile,'utf8');
+  if(active){
+    homeHtml=homeHtml.replace('content="noindex,nofollow"','content="index,follow"');
+    if(site.startsWith('https://')&&site!=='https://example.com'){
+      homeHtml=homeHtml.replace('</head>','<link rel="canonical" href="'+site+'/"></head>');
+    }
+  }
+  homeHtml=homeHtml.replace('<div id="root"></div>','<div id="root"><main><section><h1>Imóveis em Goiânia: casas, apartamentos e terrenos</h1><p>Explore casas à venda em Goiânia, apartamentos, terrenos, imóveis em condomínio fechado e oportunidades na região metropolitana.</p><nav><a href="/explorar/casas-a-venda-em-goiania/">Casas à venda em Goiânia</a> <a href="/explorar/apartamentos-a-venda-em-goiania/">Apartamentos à venda</a> <a href="/explorar/terrenos-a-venda-em-goiania/">Terrenos</a> <a href="/explorar/imoveis-setor-bueno-goiania/">Setor Bueno</a></nav></section></main></div>');
+  fs.writeFileSync(homeFile,homeHtml);
+}
 const first=data.map(r=>r[0]);
 function page(r,index){
  const [slug,title,description,body,takeaway,image]=r;
