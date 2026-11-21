@@ -60,7 +60,7 @@ const PROVIDER_SCHEMA = {
     streetAddress: 'Avenida Nossa Senhora das Graças, Qd 11 Lote 25, Residencial Monte Pascoal 2',
     addressLocality: 'Goiânia',
     addressRegion: 'GO',
-    postalCode: '74484-480',
+    postalCode: '74494-564',
     addressCountry: 'BR',
   },
   geo: {

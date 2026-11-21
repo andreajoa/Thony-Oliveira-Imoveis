@@ -691,7 +691,7 @@ export function renderEmailHtml({
           <tr>
             <td class="pad-main" style="padding:28px 32px;background-color:#17382e;color:#cbd5cd;font-family:'DM Sans',Arial,sans-serif;font-size:11.5px;line-height:1.7;">
               <strong style="color:#ffffff;font-family:'Manrope',Arial,sans-serif;font-size:13px;letter-spacing:0.06em;">THONY OLIVEIRA IMÓVEIS · GOIÂNIA &amp; GOIANIRA, GOIÁS</strong><br>
-              Av. Nossa Senhora das Graças, Qd 11 Lote 25 — Residencial Monte Pascoal 2, Goiânia – GO, CEP 74484-480<br>
+              Av. Nossa Senhora das Graças, Qd 11 Lote 25 — Residencial Monte Pascoal 2, Goiânia – GO, CEP 74494-564<br>
               Atendimento consultivo direto · WhatsApp: <a href="${waUrl}" style="color:#e3bc88;text-decoration:underline;">${WHATSAPP_SHOWN}</a> · Site oficial: <a href="${SITE_ORIGIN}/" style="color:#e3bc88;text-decoration:underline;">thonyoliveiraimoveis.online</a><br><br>
               <span style="color:#9eb0a3;font-size:11px;">
                 *Aviso legal: valores, parcelas e condições comerciais citados são referenciais, extraídos das tabelas e lâminas oficiais das respectivas incorporadoras, estando sujeitos a alteração e à disponibilidade de unidades no momento da consulta. Você recebe este e-mail porque cadastrou seu endereço no site oficial thonyoliveiraimoveis.online para acompanhar oportunidades e lançamentos imobiliários.
