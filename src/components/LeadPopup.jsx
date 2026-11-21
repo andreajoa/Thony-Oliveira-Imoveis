@@ -57,7 +57,7 @@ export default function LeadPopup({ forceOpen = false }) {
       return;
     }
 
-    const timer = setTimeout(() => setOpen(true), 2200);
+    const timer = setTimeout(() => setOpen(true), 6200);
     return () => clearTimeout(timer);
   }, [forceOpen, featured?.slug]);
 

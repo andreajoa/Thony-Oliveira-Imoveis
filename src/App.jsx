@@ -162,6 +162,28 @@ const heroIndex = [
 
 function Hero() {
   const photo = useRef(null);
+  const [heroSlide, setHeroSlide] = useState(0); // 0 = Hook Pinheiros R$ 654,19 -> fade -> 1 = Seu próximo capítulo tem endereço.
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let cancelled = false;
+    let timer;
+    const scheduleNext = (current) => {
+      const delay = current === 0 ? 4500 : 6500;
+      timer = setTimeout(() => {
+        if (cancelled) return;
+        const next = current === 0 ? 1 : 0;
+        setHeroSlide(next);
+        scheduleNext(next);
+      }, delay);
+    };
+    scheduleNext(0);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, []);
+
   useEffect(() => {
     const el = photo.current;
     if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -195,25 +217,46 @@ function Hero() {
           <span className="serial-num">04 EMPREENDIMENTOS</span>
         </div>
         <div className="hero-headline">
-          <span className="eyebrow">CONDOMÍNIOS FECHADOS E LOTEAMENTOS PLANEJADOS</span>
-          <Title as="h1">
-            Seu próximo
-            <br />
-            capítulo <em>tem</em>
-            <br />
-            <em>endereço.</em>
-          </Title>
+          <div className="hero-eyebrow-stage">
+            <span className={'eyebrow hero-fade-item ' + (heroSlide === 0 ? 'is-active' : '')}>
+              <Sparkles size={12} /> DESTAQUE · CONDOMÍNIO HORIZONTAL PINHEIROS
+            </span>
+            <span
+              className={'eyebrow hero-fade-item ' + (heroSlide === 1 ? 'is-active' : '')}
+              aria-hidden={heroSlide !== 1}
+            >
+              CONDOMÍNIOS FECHADOS E LOTEAMENTOS PLANEJADOS
+            </span>
+          </div>
+
+          <h1 className="hero-title-stage">
+            <span className={'hero-title-slide hero-title-pinheiros ' + (heroSlide === 0 ? 'is-active' : '')}>
+              <span className="hero-pinheiros-kicker">Condomínio Pinheiros</span>
+              <span className="hero-pinheiros-sub">temos parcelas a partir de</span>
+              <em className="hero-pinheiros-price">R$ 654,19*</em>
+            </span>
+            <span
+              className={'hero-title-slide ' + (heroSlide === 1 ? 'is-active' : '')}
+              aria-hidden={heroSlide !== 1}
+            >
+              Seu próximo
+              <br />
+              capítulo <em>tem</em>
+              <br />
+              <em>endereço.</em>
+            </span>
+          </h1>
           <p data-reveal="" style={{ '--d': 3 }}>
             Terrenos e condomínios horizontais criteriosamente selecionados ao lado da UFG em
             Goiânia e no eixo de maior valorização da GO-070 em Goianira — com atendimento direto,
             tabela atualizada e visitas acompanhadas.
           </p>
           <div className="hero-actions" data-reveal="" style={{ '--d': 4 }}>
-            <a className="button dark-button" href="#imoveis">
-              VER OS 4 EMPREENDIMENTOS <ArrowUpRight size={18} />
+            <a className="button dark-button" href="/empreendimentos/condominio-pinheiros-goianira/">
+              CONHECER CONDOMÍNIO PINHEIROS <ArrowUpRight size={18} />
             </a>
-            <a className="text-link" href="#comparativo">
-              Comparar opções lado a lado <ArrowRight size={17} />
+            <a className="text-link" href="#imoveis">
+              Ver os 4 empreendimentos <ArrowRight size={17} />
             </a>
           </div>
           <nav className="hero-index" aria-label="Nesta página" data-reveal="" style={{ '--d': 5 }}>
