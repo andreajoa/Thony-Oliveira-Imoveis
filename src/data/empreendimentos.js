@@ -14,10 +14,154 @@ export const EMAIL_API_BASE = 'https://thony-oliveira-email.andrealmeidashop.wor
 
 export const EMPREENDIMENTOS = [
   {
+    id: 'condominio-pinheiros',
+    slug: 'condominio-pinheiros-goianira',
+    addedAt: '2026-11-21T23:35:00Z',
+    featuredInPopup: true,
+    emailLoopGif: '/email/loop-pinheiros.gif',
+    popupVideo: '/email/popup-loop.mp4',
+    popupHook:
+      'Em destaque a 800 m da GO-070: apenas 109 lotes de 287 a 486 m², lago privativo de +5 mil m² para pesca e parcelas a partir de R$ 654,19*.',
+    name: 'Condomínio Horizontal Pinheiros',
+    shortName: 'Condomínio Pinheiros',
+    badge: '★ EM DESTAQUE · APENAS 109 LOTES · COM LAGO',
+    modality: 'Condomínio Fechado',
+    usage: 'Residencial · Acesso Controlado',
+    city: 'Goianira',
+    region: 'Goianira · 800 m da GO-070',
+    regionFilter: 'Goianira · Eixo GO-070',
+    locationLine: 'Rua Adoniram Barbosa, Goianira – GO · A 800 m da GO-070',
+    developers: 'MAC Empreendimentos e +VGV Brasil',
+    tagline: 'Naturalmente exclusivo: apenas 109 lotes e lago de pesca com mais de 5 mil m².',
+    shortDescription:
+      'Condomínio fechado intimista em Goianira com apenas 109 terrenos de 287 a 486 m², lago de +5 mil m², fire place, piscina e parcelas a partir de R$ 654,19*.',
+    summary: [
+      'O Condomínio Horizontal Pinheiros é um empreendimento da MAC Empreendimentos (47 anos de história) com gestão comercial da +VGV Brasil, localizado a apenas 800 metros da GO-070, em Goianira, ao lado do consolidado Rosa de Leiria.',
+      'Com apenas 109 terrenos de 287 m² a 486 m² em uma gleba de quase 90 mil m², oferece a exclusividade rara de um condomínio boutique, abraçado por quase 30 mil m² somados de área verde/APP e um lago natural de mais de 5 mil m² para pesca e contemplação.',
+      'São 19 itens de lazer e convivência pensados para toda a família — de piscina, academia, salão de festas e quadra de areia a fire place, deck do lago, chalés de pesca, casa de bonecas e pet place — com parcelas a partir de R$ 654,19*, um dos melhores custos-benefício entre os condomínios fechados da Região Metropolitana de Goiânia.',
+    ],
+    priceHighlight: 'Parcelas a partir de R$ 654,19*',
+    priceDetail: 'Terrenos de 287 a 486 m² · Entrada facilitada + financiamento direto',
+    priceLegal:
+      '*Parcelas referenciais a partir de R$ 654,19 conforme tabela comercial vigente MAC Empreendimentos / +VGV Brasil. Valores sujeitos à disponibilidade de unidade.',
+    metrics: [
+      { label: 'EXCLUSIVIDADE', value: '109 lotes', sub: 'condomínio de baixa densidade' },
+      { label: 'METRAGEM', value: '287–486 m²', sub: 'entrega prevista mai/2029' },
+      { label: 'LAGO PRIVATIVO', value: '+5 mil m²', sub: 'com deck e 2 chalés de pesca' },
+      { label: 'CONDIÇÃO', value: 'R$ 654,19*', sub: 'parcelas a partir · 19 itens de lazer' },
+    ],
+    compare: {
+      perfil: 'Exclusividade máxima, silêncio e vida à beira do lago',
+      lotes: 'Apenas 109 lotes',
+      metragem: '287 a 486 m²',
+      diferencial: 'Lago de +5 mil m² para pesca + 19 itens de lazer',
+      condicao: 'Parcelas a partir de R$ 654,19*',
+    },
+    tags: ['Em Destaque', 'Condomínio Fechado', 'Exclusivo', 'Lago de Pesca', 'Moradia'],
+    goals: ['Moradia', 'Investimento'],
+    cover: '/empreendimentos/condominio-pinheiros/01-portaria.webp',
+    coverAlt:
+      'Portaria contemporânea com segurança 24h do Condomínio Horizontal Pinheiros em Goianira',
+    implantationImage: '/empreendimentos/condominio-pinheiros/08-implantacao.webp',
+    implantationNote:
+      'Implantação oficial dos 109 lotes em 6 quadras, destacando o lago de +5 mil m² ao oeste e o clube de lazer no eixo central.',
+    tour360Url: null,
+    gallery: [
+      {
+        src: '/empreendimentos/condominio-pinheiros/01-portaria.webp',
+        title: 'Portaria com segurança 24h',
+        caption: 'Chegada imponente em pedra natural, controle de acesso e paisagismo tropical.',
+      },
+      {
+        src: '/empreendimentos/condominio-pinheiros/02-lago-pista.webp',
+        title: 'Lago de +5 mil m² e pista de caminhada',
+        caption: 'Deck sobre a água e caminhada matinal em meio aos pássaros e árvores.',
+      },
+      {
+        src: '/empreendimentos/condominio-pinheiros/03-piscina.webp',
+        title: 'Piscina com deck e lazer',
+        caption: 'Deck amadeirado, espreguiçadeiras, playground e quadra de areia integrados.',
+      },
+      {
+        src: '/empreendimentos/condominio-pinheiros/04-fireplace.webp',
+        title: 'Fire Place ao pôr do sol',
+        caption: 'Espaço acolhedor à beira do lago para relaxar ao final do dia.',
+      },
+      {
+        src: '/empreendimentos/condominio-pinheiros/05-complexo-lazer.webp',
+        title: 'Vista aérea do clube central',
+        caption: 'Salão de festas, academia, piscina, campo society e quadra de areia.',
+      },
+      {
+        src: '/empreendimentos/condominio-pinheiros/06-chale-pesca.webp',
+        title: 'Chalé de pesca à beira do lago',
+        caption: 'Dois chalés exclusivos voltados para pesca esportiva e contemplação.',
+      },
+      {
+        src: '/empreendimentos/condominio-pinheiros/07-drone-regiao.webp',
+        title: 'Foto real de drone em Goianira',
+        caption: 'Entorno consolidado a 800 m da GO-070 e 1 min do Open Mall Rosa de Leiria.',
+      },
+    ],
+    amenities: [
+      'Portaria com segurança e controle de acesso 24h',
+      'Lago com mais de 5 mil m² + Deck do Lago',
+      '2 Chalés de Pesca à beira d’água',
+      'Fire Place e Pergolado contemplativo',
+      'Piscina com deck de madeira',
+      'Salão de Festas e 2 Espaços Gourmet',
+      'Academia equipada e Pista de Caminhada',
+      'Campo de Futebol Society e Quadra de Areia',
+      'Casa de Bonecas, Brinquedoteca e Playground',
+      'Pet Place cercado',
+      'Quase 30 mil m² de áreas verdes e APP preservada',
+    ],
+    distances: [
+      { time: '1 min', place: 'Open Mall Rosa de Leiria' },
+      { time: '3 min', place: 'Restaurante Flor da Roça' },
+      { time: '4 min', place: 'Max Atacadão' },
+      { time: '10 min', place: 'Centro de Goianira' },
+      { time: '16 min', place: 'HUGOL e Costa Atacadão' },
+      { time: '19 min', place: 'Portal Shopping' },
+      { time: '30 min', place: 'Passeio das Águas Shopping' },
+      { time: '800 m', place: 'Rodovia GO-070' },
+    ],
+    legal: {
+      incorporadoras: 'MAC Empreendimentos (SPE Loteamento Residencial Pinheiros Ltda) · Gestão +VGV Brasil',
+      registro: 'Decretos Municipais nº 122/2025 e 148/2025 (Goianira-GO) · Registro R-5 da matrícula nº 45.383 no CRI de Goianira.',
+      entrega: 'Prazo contratual de entrega das obras: até 13/05/2029.',
+      address: 'Rua Adoniram Barbosa, Goianira – GO · CEP 75.368-203',
+      disclaimer:
+        'Imagens e perspectivas artísticas ilustrativas. Mobiliário e vegetação adulta são referenciais. Consulte memorial descritivo e tabela comercial vigente.',
+    },
+    whatsappMessage:
+      'Olá, Thony! Quero receber a tabela do Condomínio Horizontal Pinheiros (parcelas a partir de R$ 654,19*) e agendar uma visita.',
+    bookWhatsappMessage:
+      'Olá, Thony! Pode me enviar o Book Digital completo e a tabela com parcelas a partir de R$ 654,19* do Condomínio Pinheiros?',
+    seoTitle: 'Condomínio Horizontal Pinheiros Goianira | Parcelas a partir de R$ 654,19*',
+    seoDescription:
+      'Condomínio fechado Pinheiros em Goianira (800 m da GO-070): parcelas a partir de R$ 654,19*, apenas 109 terrenos de 287 a 486 m², lago de +5 mil m², piscina, fire place e 19 itens de lazer.',
+    faqs: [
+      [
+        'Quantos lotes existem no Condomínio Pinheiros e qual o valor das parcelas?',
+        'São apenas 109 lotes residenciais de 287 m² a 486 m², com parcelas referenciais a partir de R$ 654,19* e parcelamento direto com a incorporadora.',
+      ],
+      [
+        'O Condomínio Pinheiros é registrado em cartório?',
+        'Sim. Aprovado pelos Decretos Municipais nº 122/2025 e 148/2025 da Prefeitura de Goianira e registrado sob o R-5 da matrícula 45.383 do CRI de Goianira, com previsão de entrega das obras até 13/05/2029.',
+      ],
+      [
+        'O lago do condomínio permite pesca?',
+        'Sim! O lago tem mais de 5 mil m² e conta com deck de contemplação e 2 chalés de pesca, além de fire place e pista de caminhada no entorno.',
+      ],
+    ],
+  },
+
+  {
     id: 'parque-universitario',
     slug: 'parque-universitario-goiania',
     addedAt: '2026-11-21T10:00:00Z',
-    featuredInPopup: true,
+    featuredInPopup: false,
     emailLoopGif: '/email/loop-parque.gif',
     popupVideo: '/email/popup-loop.mp4',
     popupHook:
@@ -312,150 +456,6 @@ export const EMPREENDIMENTOS = [
       [
         'Posso conhecer o Terraví Ipês virtualmente antes de ir ao local?',
         'Sim! Esta página traz o Tour Virtual 360° oficial para você explorar portaria, piscinas e áreas comuns, além do atendimento direto com Thony para visita presencial.',
-      ],
-    ],
-  },
-
-  {
-    id: 'condominio-pinheiros',
-    slug: 'condominio-pinheiros-goianira',
-    addedAt: '2026-11-21T08:00:00Z',
-    featuredInPopup: false,
-    emailLoopGif: '/email/loop-pinheiros.gif',
-    popupVideo: '/email/popup-loop.mp4',
-    popupHook:
-      'Exclusividade rara a 800 m da GO-070: apenas 109 lotes de 287 a 486 m², lago privativo de +5 mil m² para pesca e parcelas a partir de R$ 949,15*.',
-    name: 'Condomínio Horizontal Pinheiros',
-    shortName: 'Condomínio Pinheiros',
-    badge: 'APENAS 109 LOTES · COM LAGO',
-    modality: 'Condomínio Fechado',
-    usage: 'Residencial · Acesso Controlado',
-    city: 'Goianira',
-    region: 'Goianira · 800 m da GO-070',
-    regionFilter: 'Goianira · Eixo GO-070',
-    locationLine: 'Rua Adoniram Barbosa, Goianira – GO · A 800 m da GO-070',
-    developers: 'MAC Empreendimentos e +VGV Brasil',
-    tagline: 'Naturalmente exclusivo: apenas 109 lotes e lago de pesca com mais de 5 mil m².',
-    shortDescription:
-      'Condomínio fechado intimista em Goianira com apenas 109 terrenos de 287 a 486 m², lago de +5 mil m², fire place, piscina e 19 itens de lazer.',
-    summary: [
-      'O Condomínio Horizontal Pinheiros é um empreendimento da MAC Empreendimentos (47 anos de história) com gestão comercial da +VGV Brasil, localizado a apenas 800 metros da GO-070, em Goianira, ao lado do consolidado Rosa de Leiria.',
-      'Com apenas 109 terrenos de 287 m² a 486 m² em uma gleba de quase 90 mil m², oferece a exclusividade rara de um condomínio boutique, abraçado por quase 30 mil m² somados de área verde/APP e um lago natural de mais de 5 mil m² para pesca e contemplação.',
-      'São 19 itens de lazer e convivência pensados para toda a família — de piscina, academia, salão de festas e quadra de areia a fire place, deck do lago, chalés de pesca, casa de bonecas e pet place — com um dos metros quadrados mais acessíveis entre os condomínios fechados da Região Metropolitana de Goiânia.',
-    ],
-    priceHighlight: 'Parcelas a partir de R$ 949,15*',
-    priceDetail: 'Terrenos de 287 a 486 m² · Entrada facilitada + financiamento direto',
-    priceLegal:
-      '*Ref. Lâmina comercial MAC (Qd 05 Lt 17: entrada 7% parcelada + 240 mensais + 20 anuais, IPCA). Valores sujeitos à disponibilidade de tabela.',
-    metrics: [
-      { label: 'EXCLUSIVIDADE', value: '109 lotes', sub: 'condomínio de baixa densidade' },
-      { label: 'METRAGEM', value: '287–486 m²', sub: 'entrega prevista mai/2029' },
-      { label: 'LAGO PRIVATIVO', value: '+5 mil m²', sub: 'com deck e 2 chalés de pesca' },
-      { label: 'LAZER E ESTRUTURA', value: '19 itens', sub: 'a 800 m da GO-070' },
-    ],
-    compare: {
-      perfil: 'Exclusividade máxima, silêncio e vida à beira do lago',
-      lotes: 'Apenas 109 lotes',
-      metragem: '287 a 486 m²',
-      diferencial: 'Lago de +5 mil m² para pesca + 19 itens de lazer',
-      condicao: 'Parcelas a partir de R$ 949,15*',
-    },
-    tags: ['Condomínio Fechado', 'Exclusivo', 'Lago de Pesca', 'Moradia'],
-    goals: ['Moradia', 'Investimento'],
-    cover: '/empreendimentos/condominio-pinheiros/01-portaria.webp',
-    coverAlt:
-      'Portaria contemporânea com segurança 24h do Condomínio Horizontal Pinheiros em Goianira',
-    implantationImage: '/empreendimentos/condominio-pinheiros/08-implantacao.webp',
-    implantationNote:
-      'Implantação oficial dos 109 lotes em 6 quadras, destacando o lago de +5 mil m² ao oeste e o clube de lazer no eixo central.',
-    tour360Url: null,
-    gallery: [
-      {
-        src: '/empreendimentos/condominio-pinheiros/01-portaria.webp',
-        title: 'Portaria com segurança 24h',
-        caption: 'Chegada imponente em pedra natural, controle de acesso e paisagismo tropical.',
-      },
-      {
-        src: '/empreendimentos/condominio-pinheiros/02-lago-pista.webp',
-        title: 'Lago de +5 mil m² e pista de caminhada',
-        caption: 'Deck sobre a água e caminhada matinal em meio aos pássaros e árvores.',
-      },
-      {
-        src: '/empreendimentos/condominio-pinheiros/03-piscina.webp',
-        title: 'Piscina com deck e lazer',
-        caption: 'Deck amadeirado, espreguiçadeiras, playground e quadra de areia integrados.',
-      },
-      {
-        src: '/empreendimentos/condominio-pinheiros/04-fireplace.webp',
-        title: 'Fire Place ao pôr do sol',
-        caption: 'Espaço acolhedor à beira do lago para relaxar ao final do dia.',
-      },
-      {
-        src: '/empreendimentos/condominio-pinheiros/05-complexo-lazer.webp',
-        title: 'Vista aérea do clube central',
-        caption: 'Salão de festas, academia, piscina, campo society e quadra de areia.',
-      },
-      {
-        src: '/empreendimentos/condominio-pinheiros/06-chale-pesca.webp',
-        title: 'Chalé de pesca à beira do lago',
-        caption: 'Dois chalés exclusivos voltados para pesca esportiva e contemplação.',
-      },
-      {
-        src: '/empreendimentos/condominio-pinheiros/07-drone-regiao.webp',
-        title: 'Foto real de drone em Goianira',
-        caption: 'Entorno consolidado a 800 m da GO-070 e 1 min do Open Mall Rosa de Leiria.',
-      },
-    ],
-    amenities: [
-      'Portaria com segurança e controle de acesso 24h',
-      'Lago com mais de 5 mil m² + Deck do Lago',
-      '2 Chalés de Pesca à beira d’água',
-      'Fire Place e Pergolado contemplativo',
-      'Piscina com deck de madeira',
-      'Salão de Festas e 2 Espaços Gourmet',
-      'Academia equipada e Pista de Caminhada',
-      'Campo de Futebol Society e Quadra de Areia',
-      'Casa de Bonecas, Brinquedoteca e Playground',
-      'Pet Place cercado',
-      'Quase 30 mil m² de áreas verdes e APP preservada',
-    ],
-    distances: [
-      { time: '1 min', place: 'Open Mall Rosa de Leiria' },
-      { time: '3 min', place: 'Restaurante Flor da Roça' },
-      { time: '4 min', place: 'Max Atacadão' },
-      { time: '10 min', place: 'Centro de Goianira' },
-      { time: '16 min', place: 'HUGOL e Costa Atacadão' },
-      { time: '19 min', place: 'Portal Shopping' },
-      { time: '30 min', place: 'Passeio das Águas Shopping' },
-      { time: '800 m', place: 'Rodovia GO-070' },
-    ],
-    legal: {
-      incorporadoras: 'MAC Empreendimentos (SPE Loteamento Residencial Pinheiros Ltda) · Gestão +VGV Brasil',
-      registro: 'Decretos Municipais nº 122/2025 e 148/2025 (Goianira-GO) · Registro R-5 da matrícula nº 45.383 no CRI de Goianira.',
-      entrega: 'Prazo contratual de entrega das obras: até 13/05/2029.',
-      address: 'Rua Adoniram Barbosa, Goianira – GO · CEP 75.368-203',
-      disclaimer:
-        'Imagens e perspectivas artísticas ilustrativas. Mobiliário e vegetação adulta são referenciais. Consulte memorial descritivo e tabela comercial vigente.',
-    },
-    whatsappMessage:
-      'Olá, Thony! Quero saber mais sobre o Condomínio Horizontal Pinheiros (109 lotes com lago) e agendar uma visita.',
-    bookWhatsappMessage:
-      'Olá, Thony! Pode me enviar o Book Digital completo e a disponibilidade de lotes do Condomínio Pinheiros?',
-    seoTitle: 'Condomínio Horizontal Pinheiros Goianira | 109 Lotes com Lago de Pesca',
-    seoDescription:
-      'Condomínio fechado Pinheiros em Goianira (800 m da GO-070): apenas 109 terrenos de 287 a 486 m², lago de +5 mil m², piscina, fire place e 19 itens de lazer.',
-    faqs: [
-      [
-        'Quantos lotes existem no Condomínio Pinheiros?',
-        'São apenas 109 lotes residenciais, com metragens de 287 m² a 486 m² — um perfil de baixa densidade e alta privacidade.',
-      ],
-      [
-        'O Condomínio Pinheiros é registrado em cartório?',
-        'Sim. Aprovado pelos Decretos Municipais nº 122/2025 e 148/2025 da Prefeitura de Goianira e registrado sob o R-5 da matrícula 45.383 do CRI de Goianira, com previsão de entrega das obras até 13/05/2029.',
-      ],
-      [
-        'O lago do condomínio permite pesca?',
-        'Sim! O lago tem mais de 5 mil m² e conta com deck de contemplação e 2 chalés de pesca, além de fire place e pista de caminhada no entorno.',
       ],
     ],
   },

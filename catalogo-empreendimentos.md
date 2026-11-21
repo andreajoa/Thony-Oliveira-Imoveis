@@ -9,7 +9,7 @@ WEB (Vite 7 + React 19 + gerador de páginas estáticas Node ESM)
 ## Empreendimentos Incluídos
 1. **Residencial Parque Universitário** — Goiânia (Região Norte, ao lado da UFG Campus Samambaia) · Landcorp + Ética Urbanismo · 528 lotes (480 res. + 48 com.), a partir de 270 m², +48 mil m² natureza/lazer, a partir de R$ 990/m².
 2. **Condomínio Horizontal Terraví Ipês** — Goianira (Eixo GO-070) · Terrano Urbanismo · 578 lotes (1ª etapa 230 a 482 m²), +115 mil m² área verde, +30 itens de lazer, Tour Virtual 360° real, Decreto 170/2025, Matrícula 50.510 (R-4), entrega 1ª etapa Jul/2029, parcelas a partir de R$ 697,76* (Tabela Black Nov/26).
-3. **Condomínio Horizontal Pinheiros** — Goianira (800 m da GO-070) · MAC Empreendimentos + VGV Brasil · 109 lotes (287 a 486 m²), lago de +5 mil m², 19 itens de lazer, Decretos 122/2025 e 148/2025, Matrícula 45.383 (R-5), entrega prevista Mai/2029, parcelas a partir de R$ 949,15*.
+3. **Condomínio Horizontal Pinheiros (EM DESTAQUE)** — Goianira (800 m da GO-070) · MAC Empreendimentos + VGV Brasil · 109 lotes (287 a 486 m²), lago de +5 mil m², 19 itens de lazer, Decretos 122/2025 e 148/2025, Matrícula 45.383 (R-5), entrega prevista Mai/2029, parcelas a partir de R$ 654,19*.
 4. **Residencial Flora Nogueira** — Goianira (900 m da GO-070) · MAC Empreendimentos + VGV Brasil · 468 lotes (231 a 502 m², 11 m frente), obras avançadas já entregues (asfalto, meio-fio, galeria pluvial), +14 mil m² área verde, Decretos 118/2025 e 147/2025, Matrícula 50.000 (R-4), parcelas a partir de R$ 481,76*.
 
 ## Success Criteria

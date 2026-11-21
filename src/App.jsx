@@ -238,27 +238,27 @@ function Hero() {
         <img
           ref={photo}
           className="hero-door"
-          src="/empreendimentos/parque-universitario/01-aerea-ufg.webp"
-          alt="Vista aérea do Residencial Parque Universitário ao lado da UFG em Goiânia"
+          src="/empreendimentos/condominio-pinheiros/01-portaria.webp"
+          alt="Portaria com segurança 24h do Condomínio Horizontal Pinheiros em Goianira"
           fetchPriority="high"
         />
         <div className="hero-photo-shade" />
         <div className="hero-topmark">
-          GOIÂNIA &amp; GOIANIRA · GO <span>16°40'S · 49°15'W</span>
+          ★ EM DESTAQUE · GOIANIRA · GO <span>800 M DA GO-070</span>
         </div>
-        <a className="hero-image-caption" href="#imoveis">
+        <a className="hero-image-caption" href="/empreendimentos/condominio-pinheiros-goianira/">
           <span className="image-caption-number">
             01 <i /> 04
           </span>
           <div>
-            <span className="hero-loop">CURADORIA REAL · LOTES A PARTIR DE 230 M²</span>
-            <strong>Do terreno ao lar.</strong>
+            <span className="hero-loop">DESTAQUE · PARCELAS A PARTIR DE R$ 654,19*</span>
+            <strong>Condomínio Pinheiros.</strong>
           </div>
           <span className="square-arrow">
             <ArrowUpRight size={22} />
           </span>
         </a>
-        <span className="hero-image-legal">PERSPECTIVA OFICIAL · PARQUE UNIVERSITÁRIO</span>
+        <span className="hero-image-legal">PERSPECTIVA OFICIAL · CONDOMÍNIO PINHEIROS</span>
       </div>
     </section>
   );

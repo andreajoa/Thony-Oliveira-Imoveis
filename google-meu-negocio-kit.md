@@ -46,7 +46,7 @@ Adicionar como áreas atendidas no perfil:
    - Link: `https://thonyoliveiraimoveis.online/empreendimentos/condominio-terravi-ipes-goianira/`
 3. **Condomínio Horizontal Pinheiros — Goianira (800 m da GO-070)**
    - Categoria: `Condomínio Fechado`
-   - Preço/Texto: Parcelas referenciais a partir de R$ 949,15* · Apenas 109 lotes (287 a 486 m²), lago de +5 mil m² para pesca e 19 itens de lazer
+   - Preço/Texto: Em destaque · Parcelas referenciais a partir de R$ 654,19* · Apenas 109 lotes (287 a 486 m²), lago de +5 mil m² para pesca e 19 itens de lazer
    - Link: `https://thonyoliveiraimoveis.online/empreendimentos/condominio-pinheiros-goianira/`
 4. **Residencial Flora Nogueira — Goianira (900 m da GO-070)**
    - Categoria: `Loteamento Aberto`

@@ -163,7 +163,7 @@ if (fs.existsSync(homeFile)) {
             name: 'É possível comprar lote com parcelamento direto com a urbanizadora em Goiás?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Sim. Os 4 empreendimentos oferecem entrada facilitada e parcelamento direto com a loteadora/incorporadora sem burocracia bancária, com referência de parcelas a partir de R$ 481,76 no Flora Nogueira, R$ 697,76 no Terraví Ipês, R$ 949,15 no Pinheiros e lotes a partir de R$ 990/m² no Parque Universitário (sujeito a tabela vigente).',
+              text: 'Sim. Os 4 empreendimentos oferecem entrada facilitada e parcelamento direto com a loteadora/incorporadora sem burocracia bancária, com referência de parcelas a partir de R$ 481,76 no Flora Nogueira, R$ 654,19 no Condomínio Pinheiros, R$ 697,76 no Terraví Ipês e lotes a partir de R$ 990/m² no Parque Universitário (sujeito a tabela vigente).',
             },
           },
         ],
@@ -702,7 +702,7 @@ const exploreData = [
     'Como Investir em Terrenos e Lotes em Goiânia e Goiás (Guia 2026)',
     'Guia prático baseado em dados reais para investir em terrenos em Goiás: valorização em Goianira (+36,2%), demanda da UFG em Goiânia e documentação.',
     'Investir em lotes bem localizados na planta ou em fase de obras na Grande Goiânia combina ticket de entrada reduzido, parcelamento direto sem burocracia bancária e forte ganho de capital até a entrega. Os quatro fatores decisivos são: (1) matrícula registrada no Cartório de Registro de Imóveis e decreto municipal, (2) vetor econômico comprovado (como o entorno da UFG ou a GO-070 em Goianira), (3) reputação da urbanizadora e (4) relação entre valor da parcela e valor de revenda após entrega.',
-    'Compare Parque Universitário (a partir de R$ 990/m² em Goiânia), Flora Nogueira (parcelas a partir de R$ 481,76* com asfalto pronto), Terraví Ipês (R$ 697,76*) e Pinheiros (109 lotes, R$ 949,15*).',
+    'Compare Condomínio Pinheiros em destaque (109 lotes com lago, parcelas a partir de R$ 654,19*), Flora Nogueira (a partir de R$ 481,76* com asfalto pronto), Terraví Ipês (R$ 697,76*) e Parque Universitário (a partir de R$ 990/m² em Goiânia).',
     '/empreendimentos/parque-universitario/01-aerea-ufg.webp',
     ['parque-universitario', 'flora-nogueira', 'terravi-ipes', 'condominio-pinheiros'],
   ],
