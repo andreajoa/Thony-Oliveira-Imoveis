@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import HouseBuild from './components/HouseBuild.jsx';
 import HouseTour from './components/HouseTour.jsx';
+import LeadPopup from './components/LeadPopup.jsx';
 import {
   EMPREENDIMENTOS,
   WHATSAPP_DEFAULT,
@@ -813,16 +814,26 @@ function Footer() {
           <a href="/explorar/investir-em-terrenos-goiania-goias/">Investir em Terrenos</a>
         </div>
         <div>
-          <span>ATENDIMENTO</span>
+          <span>ATENDIMENTO &amp; LEGAL</span>
           <p>Goiânia e Região Metropolitana · Goiás</p>
           <ContactButton>WhatsApp {WHATSAPP_SHOWN} ↗</ContactButton>
+          <a href="/?popup=1#receber-imoveis">Receber Imóveis por E-mail</a>
+          <a href="/privacidade/">Política de Privacidade (LGPD)</a>
+          <a href="/termos/">Termos de Uso</a>
+          <a href="/cookies/">Política de Cookies</a>
+          <a href="/descadastrar/">Cancelar Inscrição (E-mail)</a>
           {creci && <p>CRECI {creci}</p>}
         </div>
       </div>
 
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} THONY OLIVEIRA IMÓVEIS · GOIÂNIA &amp; GOIANIRA</span>
-        <span>FEITO PARA QUEM NÃO QUER APENAS COMPRAR. QUER PERTENCER.</span>
+        <span>
+          <a href="/privacidade/" style={{ color: 'inherit', marginRight: 14 }}>PRIVACIDADE</a>
+          <a href="/termos/" style={{ color: 'inherit', marginRight: 14 }}>TERMOS</a>
+          <a href="/cookies/" style={{ color: 'inherit', marginRight: 14 }}>COOKIES</a>
+          <a href="/descadastrar/" style={{ color: 'inherit' }}>DESCADASTRAR</a>
+        </span>
         <a href="#inicio">VOLTAR AO INÍCIO ↑</a>
       </div>
     </footer>
@@ -889,6 +900,7 @@ export default function App() {
         <FAQ />
       </main>
       <Footer />
+      <LeadPopup />
       <WhatsAppFloat
         current={current}
         href={waLink(

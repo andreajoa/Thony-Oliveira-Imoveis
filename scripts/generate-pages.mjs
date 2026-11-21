@@ -516,6 +516,13 @@ ${canonical}
 <footer>
   <strong>THONY OLIVEIRA IMÓVEIS.</strong>
   <span>GOIÂNIA &amp; GOIANIRA · WHATSAPP ${WHATSAPP_SHOWN}${CRECI ? ` · CRECI ${escapeHtml(CRECI)}` : ''}</span>
+  <span style="display:flex;gap:14px;flex-wrap:wrap;">
+    <a href="/?popup=1#receber-imoveis">RECEBER IMÓVEIS NO E-MAIL</a>
+    <a href="/privacidade/">PRIVACIDADE (LGPD)</a>
+    <a href="/termos/">TERMOS DE USO</a>
+    <a href="/cookies/">COOKIES</a>
+    <a href="/descadastrar/">DESCADASTRAR</a>
+  </span>
   <a href="/">VOLTAR PARA A PÁGINA INICIAL ↑</a>
 </footer>
 
@@ -1005,7 +1012,7 @@ function renderExplorePage(r, index) {
 <section class="related"><p class="eyebrow">CONTINUE EXPLORANDO GOIÁS</p><h2>Outros guias regionais e buscas em Goiânia e Goiás.</h2><div class="links">${related}</div></section>
 <section class="faq"><p class="eyebrow">DÚVIDAS FREQUENTES</p><h2>Perguntas antes de escolher seu terreno.</h2>${faq.map(([q, a]) => `<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join('')}</section>
 </main>
-<footer><strong>THONY OLIVEIRA.</strong><span>GOIÂNIA, GOIANIRA &amp; GOIÁS · WHATSAPP ${WHATSAPP_SHOWN}${CRECI ? ` · CRECI ${escapeHtml(CRECI)}` : ''}</span><a href="/">VOLTAR PARA INÍCIO ↑</a></footer>
+<footer><strong>THONY OLIVEIRA.</strong><span>GOIÂNIA, GOIANIRA &amp; GOIÁS · WHATSAPP ${WHATSAPP_SHOWN}${CRECI ? ` · CRECI ${escapeHtml(CRECI)}` : ''}</span><span style="display:flex;gap:12px;flex-wrap:wrap;"><a href="/?popup=1#receber-imoveis">RECEBER IMÓVEIS NO E-MAIL</a><a href="/privacidade/">PRIVACIDADE</a><a href="/termos/">TERMOS</a><a href="/cookies/">COOKIES</a><a href="/descadastrar/">DESCADASTRAR</a></span><a href="/">VOLTAR PARA INÍCIO ↑</a></footer>
 <a class="wa-float" href="${waHref}" target="_blank" rel="noopener noreferrer" aria-label="Conversar com Thony no WhatsApp ${WHATSAPP_SHOWN}">${WA_ICON}<span>WhatsApp</span></a>
 </body></html>`;
 }
@@ -1014,6 +1021,178 @@ for (let i = 0; i < exploreData.length; i++) {
   const folder = path.join(output, 'explorar', exploreData[i][0]);
   fs.mkdirSync(folder, { recursive: true });
   fs.writeFileSync(path.join(folder, 'index.html'), renderExplorePage(exploreData[i], i));
+}
+
+// 4-A) Páginas Legais Obrigatórias (/privacidade/, /termos/, /cookies/, /descadastrar/)
+const legalPages = [
+  {
+    slug: 'privacidade',
+    title: 'Política de Privacidade e Proteção de Dados (LGPD)',
+    description:
+      'Política de Privacidade e Tratamento de Dados Pessoais da Thony Oliveira Imóveis em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD).',
+    contentHtml: `
+      <div class="tldr-box">
+        <strong>Resumo de transparência (LGPD)</strong>
+        <p>Coletamos apenas os dados que você informa voluntariamente no pop-up ou nos canais de atendimento (nome, e-mail, WhatsApp opcional e preferência de empreendimento) exclusivamente para enviar as informações imobiliárias solicitadas e nossa curadoria periódica a cada 5 dias, com opção de cancelamento imediato em 1 clique.</p>
+        <div class="byline"><span>Controlador: <strong>Thony Oliveira Imóveis</strong></span><span>Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time></span><span>Goiânia e Goianira · GO</span></div>
+      </div>
+      <h2>1. Quais dados pessoais coletamos</h2>
+      <p>Quando você se inscreve no pop-up de novidades imobiliárias ou entra em contato pelo site <strong>thonyoliveiraimoveis.online</strong>, podemos coletar: (a) nome completo ou primeiro nome; (b) endereço de e-mail; (c) número de telefone/WhatsApp (quando informado opcionalmente); e (d) empreendimento ou região de interesse em Goiânia, Goianira e Goiás.</p>
+      <h2>2. Finalidade do tratamento e frequência de envio</h2>
+      <p>Os dados são utilizados estritamente para: (a) enviar imediatamente por e-mail o dossiê do empreendimento em destaque; (b) enviar nossa sequência informativa de oportunidades imobiliárias (limitada a 1 envio a cada 5 dias, além de alertas pontuais quando um novo empreendimento entra em comercialização); e (c) responder solicitações de tabelas, Books Digitais e agendamento de visitas presenciais via WhatsApp ${WHATSAPP_SHOWN}.</p>
+      <h2>3. Compartilhamento e operadores seguros</h2>
+      <p>Não vendemos nem cedemos sua lista de contato a terceiros não relacionados. Para o disparo seguro e gestão de opt-out dos e-mails, utilizamos infraestrutura autenticada via <strong>Resend</strong> e <strong>Brevo</strong> (com registros SPF, DKIM e DMARC verificados no domínio <code>thonyoliveiraimoveis.online</code>).</p>
+      <h2>4. Seus direitos como titular (Art. 18 da LGPD)</h2>
+      <p>A qualquer momento você pode solicitar confirmação de tratamento, acesso, correção, anonimização ou exclusão definitiva do seu e-mail clicando no link <strong>"Cancelar inscrição (Descadastrar)"</strong> presente no rodapé de todos os nossos e-mails, acessando diretamente a página <a href="/descadastrar/" style="text-decoration:underline;font-weight:700;">/descadastrar/</a> ou enviando mensagem para o WhatsApp ${WHATSAPP_SHOWN}.</p>
+    `,
+  },
+  {
+    slug: 'termos',
+    title: 'Termos de Uso e Condições Comerciais',
+    description:
+      'Termos de Uso, aviso legal sobre tabelas e perspectivas artísticas e condições de uso do portal Thony Oliveira Imóveis.',
+    contentHtml: `
+      <div class="tldr-box">
+        <strong>Resumo dos Termos</strong>
+        <p>As informações, perspectivas, vídeos e valores publicados no site e nos e-mails têm caráter informativo e referencial, baseados nos materiais oficiais das respectivas incorporadoras e sujeitos à disponibilidade de estoque e tabela vigente no momento da proposta.</p>
+        <div class="byline"><span>Portal: <strong>thonyoliveiraimoveis.online</strong></span><span>Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time></span></div>
+      </div>
+      <h2>1. Natureza das informações e preços referenciais</h2>
+      <p>Todos os valores por metro quadrado, parcelas mensais, planos de pagamento e prazos de entrega exibidos nas páginas de empreendimentos e nos e-mails da <strong>Thony Oliveira Imóveis</strong> são referenciais, extraídos das tabelas e lâminas comerciais oficiais das incorporadoras/urbanizadoras (Landcorp Participações, Ética Urbanismo, Terrano Urbanismo, MAC Empreendimentos e +VGV Brasil), podendo sofrer reajustes (como correção por IPCA) ou alteração sem aviso prévio.</p>
+      <h2>2. Perspectivas artísticas e simulações interativas</h2>
+      <p>As imagens de projetos futuros possuem caráter de perspectiva artística ilustrativa, com vegetação em porte adulto e acabamentos conforme memorial descritivo oficial de cada loteamento ou condomínio. As experiências interativas por rolagem (<em>Do Terreno ao Lar</em> e <em>Visita Imersiva</em>) na página inicial são simulações conceituais destinadas a ilustrar o potencial construtivo de um lote.</p>
+      <h2>3. Documentação e registro em cartório</h2>
+      <p>Toda negociação é realizada diretamente com contrato oficial da respectiva incorporadora/urbanizadora, devidamente amparada pelos decretos municipais de aprovação e matrículas registradas nos Cartórios de Registro de Imóveis competentes, conforme detalhado na seção jurídica de cada empreendimento.</p>
+      <h2>4. Propriedade intelectual e contato</h2>
+      <p>É vedada a reprodução indevida do código, textos editoriais e estrutura deste portal sem autorização. Dúvidas comerciais ou jurídicas devem ser direcionadas ao atendimento oficial pelo WhatsApp ${WHATSAPP_SHOWN} ou pelo e-mail <code>contato@thonyoliveiraimoveis.online</code>.</p>
+    `,
+  },
+  {
+    slug: 'cookies',
+    title: 'Política de Cookies e Armazenamento Local',
+    description:
+      'Como o site Thony Oliveira Imóveis utiliza cookies essenciais e armazenamento local (localStorage) para melhorar sua experiência.',
+    contentHtml: `
+      <div class="tldr-box">
+        <strong>Uso mínimo e transparente</strong>
+        <p>Utilizamos apenas armazenamento local essencial no seu navegador (<code>localStorage</code>) para lembrar se você já se inscreveu ou fechou o pop-up de captura de e-mail, evitando exibições repetitivas indesejadas.</p>
+        <div class="byline"><span>Privacidade técnica</span><span>Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time></span></div>
+      </div>
+      <h2>1. Armazenamento local do Pop-up (<code>thony_lead_popup_state_v1</code>)</h2>
+      <p>Quando você fecha o pop-up ou cadastra seu e-mail, gravamos uma chave leve no <code>localStorage</code> do seu próprio navegador indicando o imóvel em destaque já visualizado. Assim, o pop-up só volta a ser exibido automaticamente quando um <strong>novo imóvel em destaque</strong> for adicionado ao catálogo.</p>
+      <h2>2. Métricas de desempenho e segurança de borda</h2>
+      <p>Nossa hospedagem utiliza a rede global Cloudflare/NexaCloud para entrega em alta velocidade (HTTPS/TLS) e proteção contra acessos automatizados maliciosos, podendo empregar cookies técnicos estritamente necessários de segurança e performance sem rastreamento publicitário invasivo de terceiros.</p>
+      <h2>3. Como gerenciar ou limpar</h2>
+      <p>Você pode limpar os dados locais e cookies a qualquer momento nas configurações de privacidade do seu navegador (Chrome, Safari, Firefox ou Edge) sem qualquer prejuízo à navegação nas páginas dos empreendimentos.</p>
+    `,
+  },
+  {
+    slug: 'descadastrar',
+    title: 'Cancelar Inscrição de E-mails (Opt-out em 1 Clique)',
+    description:
+      'Cancele o recebimento dos e-mails periódicos da Thony Oliveira Imóveis de forma imediata e automática.',
+    contentHtml: `
+      <div class="tldr-box">
+        <strong>Cancelamento imediato e respeitoso</strong>
+        <p>Confirme abaixo o seu endereço de e-mail para interromper imediatamente o envio da nossa sequência de 5 em 5 dias. Seu pedido é processado na hora na nossa base.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #dfe1d7;padding:28px;max-width:540px;margin:24px 0;">
+        <form id="unsubForm" style="display:flex;flex-direction:column;gap:14px;">
+          <label style="display:flex;flex-direction:column;gap:6px;">
+            <span style="font:800 10px 'Manrope',sans-serif;letter-spacing:.15em;color:#5c6c61;">E-MAIL PARA DESCADASTRAR *</span>
+            <input id="unsubEmail" type="email" required placeholder="voce@exemplo.com.br" style="padding:14px;border:1px solid #cfd4c8;font:500 14px 'DM Sans',sans-serif;color:#17382e;">
+          </label>
+          <button id="unsubBtn" type="submit" style="padding:16px 22px;background:#17382e;color:#fff;border:0;font:800 11.5px 'Manrope',sans-serif;letter-spacing:.11em;text-transform:uppercase;cursor:pointer;">
+            CONFIRMAR CANCELAMENTO DE INSCRIÇÃO
+          </button>
+          <p id="unsubStatus" style="font-size:13.5px;line-height:1.6;margin:4px 0 0;color:#17382e;display:none;"></p>
+        </form>
+      </div>
+      <script>
+      (function(){
+        var params = new URLSearchParams(window.location.search);
+        var emailParam = (params.get('email') || '').trim();
+        var inp = document.getElementById('unsubEmail');
+        var form = document.getElementById('unsubForm');
+        var btn = document.getElementById('unsubBtn');
+        var st = document.getElementById('unsubStatus');
+        if (emailParam && inp) inp.value = emailParam;
+        function doUnsub(emailVal){
+          btn.disabled = true;
+          btn.textContent = 'PROCESSANDO CANCELAMENTO...';
+          st.style.display = 'block';
+          st.textContent = 'Removendo seu e-mail da lista ativa...';
+          fetch('https://thony-oliveira-email.andrealmeidashop.workers.dev/api/unsubscribe', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email: emailVal })
+          }).then(function(r){ return r.json().catch(function(){ return {}; }); }).then(function(){
+            btn.textContent = 'INSCRIÇÃO CANCELADA COM SUCESSO';
+            st.style.color = '#17382e';
+            st.innerHTML = '<strong>Pronto!</strong> O endereço <b>' + emailVal.replace(/</g,'&lt;') + '</b> foi removido da nossa cadência de e-mails.';
+          }).catch(function(){
+            btn.disabled = false;
+            btn.textContent = 'CONFIRMAR CANCELAMENTO DE INSCRIÇÃO';
+            st.innerHTML = 'Solicitação registrada. Caso precise de atendimento imediato, fale conosco no WhatsApp ${WHATSAPP_SHOWN}.';
+          });
+        }
+        if (form) {
+          form.addEventListener('submit', function(e){
+            e.preventDefault();
+            var v = (inp.value || '').trim().toLowerCase();
+            if (v) doUnsub(v);
+          });
+        }
+        if (emailParam && params.get('auto') === '1') {
+          doUnsub(emailParam);
+        }
+      })();
+      </script>
+    `,
+  },
+];
+
+function renderLegalPage(lp) {
+  const url = `/${lp.slug}/`;
+  const fullUrl = `${site}${url}`;
+  const robots = lp.slug === 'descadastrar' ? 'noindex,follow' : active ? 'index,follow' : 'noindex,nofollow';
+  const canonical = `<link rel="canonical" href="${fullUrl}">`;
+  const waHref = waLink(`Olá, Thony! Acessei a página "${lp.title}" no site e gostaria de tirar uma dúvida.`, WA);
+  const schema = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Início', item: `${site}/` },
+          { '@type': 'ListItem', position: 2, name: lp.title, item: fullUrl },
+        ],
+      },
+      {
+        '@type': 'WebPage',
+        name: lp.title,
+        description: lp.description,
+        url: fullUrl,
+        dateModified: UPDATED_ISO,
+        inLanguage: 'pt-BR',
+        publisher: PROVIDER_SCHEMA,
+      },
+    ],
+  });
+
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#17382e"><meta name="robots" content="${robots}"><title>${escapeHtml(lp.title)} | Thony Oliveira Imóveis</title><meta name="description" content="${escapeHtml(lp.description)}">${canonical}<meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Thony Oliveira Imóveis"><meta property="og:url" content="${fullUrl}"><meta property="og:title" content="${escapeHtml(lp.title)} | Thony Oliveira Imóveis"><meta property="og:description" content="${escapeHtml(lp.description)}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet"><link rel="stylesheet" href="/landing.css"><script type="application/ld+json">${schema}</script></head>
+<body><header><a href="/" class="brand"><span class="badge">T·O</span><span><b>THONY OLIVEIRA</b><small>IMÓVEIS · GOIÂNIA, GOIANIRA &amp; GOIÁS</small></span></a><nav><a href="/">Início</a><a href="/#imoveis">Empreendimentos</a><a href="/?popup=1#receber-imoveis">Receber por E-mail</a><a href="${waHref}" class="nav-contact" target="_blank" rel="noopener noreferrer">WhatsApp ${WHATSAPP_SHOWN} ↗</a></nav></header>
+<main>
+<section class="details" style="padding-top:64px;"><article><p class="eyebrow">TRANSPARÊNCIA &amp; CONFORMIDADE LEGAL</p><p class="breadcrumbs"><a href="/">Início</a> / ${escapeHtml(lp.title)}</p><h1 style="font-size:clamp(34px,4.5vw,56px);margin:14px 0 22px;">${escapeHtml(lp.title)}<em>.</em></h1>${lp.contentHtml}</article><aside><div class="box"><p class="eyebrow">PÁGINAS LEGAIS E PRIVACIDADE</p><h3>Transparência em cada etapa.</h3><p>Consulte todos os nossos documentos de conformidade e gestão de comunicação por e-mail:</p><a href="/privacidade/">POLÍTICA DE PRIVACIDADE (LGPD) ↗</a><a href="/termos/">TERMOS DE USO E CONDIÇÕES ↗</a><a href="/cookies/">POLÍTICA DE COOKIES ↗</a><a href="/descadastrar/">CANCELAR INSCRIÇÃO DE E-MAIL ↗</a><a href="/?popup=1#receber-imoveis">CADASTRAR E-MAIL NO POP-UP ↗</a></div></aside></section>
+</main>
+<footer><strong>THONY OLIVEIRA.</strong><span>GOIÂNIA, GOIANIRA &amp; GOIÁS · WHATSAPP ${WHATSAPP_SHOWN}</span><span style="display:flex;gap:12px;flex-wrap:wrap;"><a href="/privacidade/">PRIVACIDADE</a><a href="/termos/">TERMOS</a><a href="/cookies/">COOKIES</a><a href="/descadastrar/">DESCADASTRAR</a></span><a href="/">VOLTAR PARA INÍCIO ↑</a></footer>
+</body></html>`;
+}
+
+for (const lp of legalPages) {
+  const folder = path.join(output, lp.slug);
+  fs.mkdirSync(folder, { recursive: true });
+  fs.writeFileSync(path.join(folder, 'index.html'), renderLegalPage(lp));
 }
 
 // 4) GEO: llms.txt e llms-full.txt para citabilidade em ChatGPT, Perplexity, Claude e Gemini
@@ -1119,6 +1298,9 @@ if (site.startsWith('https://') && site !== 'https://example.com' && active) {
       priority: highPriorityExplore.has(r[0]) ? '0.8' : '0.7',
       freq: 'monthly',
     })),
+    { path: '/privacidade/', priority: '0.5', freq: 'yearly' },
+    { path: '/termos/', priority: '0.5', freq: 'yearly' },
+    { path: '/cookies/', priority: '0.5', freq: 'yearly' },
   ];
   fs.writeFileSync(
     path.join(output, 'sitemap.xml'),

@@ -1,12 +1,27 @@
-// Catálogo real de empreendimentos — fonte única para a Home (React) e páginas estáticas (SEO/GEO).
+// Catálogo real de empreendimentos — fonte única para a Home (React), Pop-up de captura,
+// páginas estáticas (SEO/GEO) e cadência de 20 e-mails (envio de 5 em 5 dias via Resend + Brevo).
+//
+// REGRA FIXA DO POP-UP ("IMÓVEL NOVO EM DESTAQUE"):
+// Sempre que um novo empreendimento for adicionado ao array EMPREENDIMENTOS:
+// 1) Defina `addedAt` com a data ISO atual (ex.: '2026-11-25') e/ou `featuredInPopup: true`.
+// 2) A função `getPopupFeaturedEmpreendimento()` seleciona automaticamente o imóvel mais recente
+//    (ou o que estiver marcado com `featuredInPopup: true`) como destaque principal do Pop-up
+//    (com vídeo curto em loop e fallback automático para a foto de capa).
 
 export const WHATSAPP_DEFAULT = '5562985292886';
 export const WHATSAPP_SHOWN = '(62) 98529-2886';
+export const EMAIL_API_BASE = 'https://thony-oliveira-email.andrealmeidashop.workers.dev';
 
 export const EMPREENDIMENTOS = [
   {
     id: 'parque-universitario',
     slug: 'parque-universitario-goiania',
+    addedAt: '2026-11-21T10:00:00Z',
+    featuredInPopup: true,
+    emailLoopGif: '/email/loop-parque.gif',
+    popupVideo: '/email/popup-loop.mp4',
+    popupHook:
+      'Lançamento em Goiânia ao lado da UFG: lotes residenciais e comerciais a partir de 270 m² com +48 mil m² de natureza e lazer a partir de R$ 990/m².',
     name: 'Residencial Parque Universitário',
     shortName: 'Parque Universitário',
     badge: 'LANÇAMENTO · GOIÂNIA',
@@ -149,6 +164,12 @@ export const EMPREENDIMENTOS = [
   {
     id: 'terravi-ipes',
     slug: 'condominio-terravi-ipes-goianira',
+    addedAt: '2026-11-21T09:00:00Z',
+    featuredInPopup: false,
+    emailLoopGif: '/email/loop-terravi.gif',
+    popupVideo: '/email/popup-loop.mp4',
+    popupHook:
+      'Condomínio clube em Goianira com +30 itens de lazer, 115 mil m² de área verde, Tour Virtual 360° e parcelas referenciais a partir de R$ 697,76*.',
     name: 'Condomínio Horizontal Terraví Ipês',
     shortName: 'Terraví Ipês',
     badge: 'CONDOMÍNIO CLUBE · TOUR 360°',
@@ -298,6 +319,12 @@ export const EMPREENDIMENTOS = [
   {
     id: 'condominio-pinheiros',
     slug: 'condominio-pinheiros-goianira',
+    addedAt: '2026-11-21T08:00:00Z',
+    featuredInPopup: false,
+    emailLoopGif: '/email/loop-pinheiros.gif',
+    popupVideo: '/email/popup-loop.mp4',
+    popupHook:
+      'Exclusividade rara a 800 m da GO-070: apenas 109 lotes de 287 a 486 m², lago privativo de +5 mil m² para pesca e parcelas a partir de R$ 949,15*.',
     name: 'Condomínio Horizontal Pinheiros',
     shortName: 'Condomínio Pinheiros',
     badge: 'APENAS 109 LOTES · COM LAGO',
@@ -436,6 +463,12 @@ export const EMPREENDIMENTOS = [
   {
     id: 'flora-nogueira',
     slug: 'residencial-flora-nogueira-goianira',
+    addedAt: '2026-11-21T07:00:00Z',
+    featuredInPopup: false,
+    emailLoopGif: '/email/loop-flora.gif',
+    popupVideo: '/email/popup-loop.mp4',
+    popupHook:
+      'Obras avançadas já entregues em Goianira (asfalto, meio-fio e drenagem): 468 lotes de 231 a 502 m² com parcelas referenciais a partir de R$ 481,76*.',
     name: 'Residencial Flora Nogueira',
     shortName: 'Flora Nogueira',
     badge: 'OBRAS ENTREGUES · LOTEAMENTO ABERTO',
@@ -562,4 +595,22 @@ export const EMPREENDIMENTOS = [
 export function waLink(message, number = WHATSAPP_DEFAULT) {
   const clean = String(number || WHATSAPP_DEFAULT).replace(/\D/g, '');
   return `https://wa.me/${clean}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * REGRA AUTOMÁTICA DO POP-UP:
+ * Retorna sempre o imóvel mais recente adicionado ao catálogo (ou marcado com `featuredInPopup: true`).
+ * Quando um novo imóvel é adicionado ao final de EMPREENDIMENTOS ou com `addedAt` mais novo,
+ * ele assume automaticamente o destaque do Pop-up sem precisar alterar componentes visuais.
+ */
+export function getPopupFeaturedEmpreendimento(list = EMPREENDIMENTOS) {
+  if (!Array.isArray(list) || list.length === 0) return null;
+  const explicit = list.filter((item) => item.featuredInPopup);
+  const pool = explicit.length > 0 ? explicit : list;
+  const sorted = [...pool].sort((a, b) => {
+    const ta = a.addedAt ? Date.parse(a.addedAt) : 0;
+    const tb = b.addedAt ? Date.parse(b.addedAt) : 0;
+    return tb - ta;
+  });
+  return sorted[0] || pool[pool.length - 1];
 }
