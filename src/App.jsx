@@ -815,7 +815,7 @@ function Footer() {
         </div>
         <div>
           <span>ATENDIMENTO &amp; LEGAL</span>
-          <p>Goiânia e Região Metropolitana · Goiás</p>
+          <p>Av. Nossa Senhora das Graças, Qd 11 Lt 25 · Res. Monte Pascoal 2, Goiânia – GO</p>
           <ContactButton>WhatsApp {WHATSAPP_SHOWN} ↗</ContactButton>
           <a href="/?popup=1#receber-imoveis">Receber Imóveis por E-mail</a>
           <a href="/privacidade/">Política de Privacidade (LGPD)</a>

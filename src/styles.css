@@ -383,20 +383,28 @@ h2 em{letter-spacing:-.045em}
 
 .lead-popup-close{
   position:absolute;
-  top:14px;
-  right:14px;
-  z-index:5;
-  width:38px;
-  height:38px;
-  display:grid;
-  place-items:center;
+  top:12px;
+  right:12px;
+  z-index:20;
+  height:36px;
+  padding:0 13px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
   background:#17382e;
-  color:#f6f5f0;
-  border:1px solid rgba(227,188,136,.45);
+  color:#ffffff;
+  border:1.5px solid #e3bc88;
+  font:800 10px 'Manrope',sans-serif;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  box-shadow:0 8px 22px rgba(7,19,15,.42);
   cursor:pointer;
+  transition:transform .18s,background .18s;
 }
 .lead-popup-close:hover{
   background:#224e40;
+  transform:scale(1.03);
 }
 
 .lead-popup-media{
@@ -672,20 +680,107 @@ h2 em{letter-spacing:-.045em}
 }
 
 @media(max-width:860px){
+  .lead-popup-backdrop{
+    padding:14px;
+    align-items:center;
+  }
   .lead-popup-card{
     grid-template-columns:1fr;
-    max-width:520px;
-    max-height:92vh;
+    max-width:348px;
+    max-height:86vh;
     overflow-y:auto;
+    border-radius:10px;
+  }
+  .lead-popup-close{
+    top:10px;
+    right:10px;
+    height:34px;
+    padding:0 12px;
+    font-size:9.5px;
+    background:#17382e;
+    border:1.5px solid #e3bc88;
   }
   .lead-popup-media{
-    min-height:245px;
+    min-height:152px;
+    max-height:152px;
+  }
+  .lead-popup-media-overlay{
+    padding:10px 12px;
+  }
+  .lead-popup-badge-gold{
+    padding:4px 8px;
+    font-size:8px;
+  }
+  .lead-popup-featured-box{
+    padding:8px 11px;
+  }
+  .lead-popup-featured-box small{
+    font-size:8px;
+    margin-bottom:2px;
+  }
+  .lead-popup-featured-box h3{
+    font-size:15px;
+    margin:0 0 4px;
+  }
+  .lead-popup-featured-box p{
+    display:none;
+  }
+  .lead-popup-featured-meta{
+    padding-top:4px;
+  }
+  .lead-popup-featured-meta strong{
+    font-size:13px;
+  }
+  .lead-popup-featured-meta a{
+    font-size:9.5px;
   }
   .lead-popup-content{
-    padding:24px 20px 22px;
+    padding:14px 16px 14px;
+  }
+  .lead-popup-eyebrow{
+    font-size:8.5px;
+    margin-bottom:4px;
+  }
+  .lead-popup-content h2{
+    font-size:18.5px;
+    line-height:1.18;
+    margin:0 0 6px;
+  }
+  .lead-popup-sub{
+    font-size:11.5px;
+    line-height:1.45;
+    margin:0 0 10px;
+  }
+  .lead-popup-form{
+    gap:8px;
   }
   .lead-popup-row-2{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .lead-popup-form label span{
+    font-size:8.5px;
+  }
+  .lead-popup-form input,
+  .lead-popup-form select{
+    padding:8px 10px;
+    font-size:12px;
+  }
+  .lead-popup-submit{
+    padding:12px 14px;
+    font-size:10px;
+    margin-top:2px;
+  }
+  .lead-popup-trust{
+    margin-top:8px;
+    padding-top:8px;
+    font-size:9.5px;
+    gap:4px;
+  }
+  .lead-popup-legal{
+    margin-top:6px;
+    font-size:9px;
+    line-height:1.4;
   }
   .popup-trigger-pill span{
     display:none;

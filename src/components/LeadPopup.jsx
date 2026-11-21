@@ -162,20 +162,23 @@ export default function LeadPopup({ forceOpen = false }) {
               onClick={handleClose}
               aria-label="Fechar janela de inscrição"
             >
-              <X size={19} />
+              <span>FECHAR</span>
+              <X size={16} />
             </button>
 
-            {/* COLUNA ESQUERDA: VÍDEO CURTO EM LOOP (COM FALLBACK AUTOMÁTICO PARA IMAGEM) + IMÓVEL EM DESTAQUE */}
+            {/* COLUNA ESQUERDA: VÍDEO EM ALTA DEFINIÇÃO (COM FALLBACK AUTOMÁTICO PARA IMAGEM) + IMÓVEL EM DESTAQUE */}
             <div className="lead-popup-media">
               {!videoFailed && featured.popupVideo ? (
                 <video
                   className="lead-popup-video"
                   src={featured.popupVideo}
                   poster={featured.cover}
+                  preload="auto"
                   autoPlay
                   loop
                   muted
                   playsInline
+                  disablePictureInPicture
                   onError={() => setVideoFailed(true)}
                 />
               ) : (
@@ -190,9 +193,6 @@ export default function LeadPopup({ forceOpen = false }) {
                 <div className="lead-popup-top-badges">
                   <span className="lead-popup-badge-gold">
                     <Sparkles size={12} /> DESTAQUE DO PORTFÓLIO · {featured.city.toUpperCase()}
-                  </span>
-                  <span className="lead-popup-badge-dark">
-                    <Play size={11} /> VÍDEO EM LOOP
                   </span>
                 </div>
 
@@ -210,20 +210,19 @@ export default function LeadPopup({ forceOpen = false }) {
               </div>
             </div>
 
-            {/* COLUNA DIREITA: FORMULÁRIO DE CAPTURA + CADÊNCIA DE 5 EM 5 DIAS + LINKS LEGAIS */}
+            {/* COLUNA DIREITA: FORMULÁRIO DE CAPTURA + LINKS LEGAIS */}
             <div className="lead-popup-content">
               <span className="lead-popup-eyebrow">
                 ● CURADORIA IMOBILIÁRIA NO SEU E-MAIL
               </span>
               <h2 id="lead-popup-title">
                 Receba os melhores lotes de Goiânia e Goianira{' '}
-                <em>com vídeos, fotos e tabela real.</em>
+                <em>com fotos, vídeos e tabela real.</em>
               </h2>
               <p className="lead-popup-sub">
-                Cadastre seu e-mail para receber <strong>agora mesmo</strong> o dossiê do{' '}
-                <strong>{featured.shortName}</strong> e acompanhar, de <strong>5 em 5 dias</strong>,
-                nossa seleção exclusiva com 20 análises de oportunidades, vídeos em loop e condições
-                diretas com a urbanizadora.
+                Cadastre seu e-mail para receber <strong>agora mesmo</strong> a apresentação
+                completa do <strong>{featured.shortName}</strong>, além de novas oportunidades
+                selecionadas, mapas de implantação e condições diretas com a urbanizadora.
               </p>
 
               {status === 'success' ? (
@@ -231,9 +230,9 @@ export default function LeadPopup({ forceOpen = false }) {
                   <CheckCircle2 size={32} />
                   <h3>Inscrição confirmada! Confira sua caixa de entrada.</h3>
                   <p>
-                    Enviamos agora o <strong>1º e-mail da série</strong> com o vídeo em loop e os
-                    detalhes do <strong>{featured.name}</strong> + comparativo dos 4
-                    empreendimentos. Você receberá uma nova oportunidade selecionada a cada 5 dias.
+                    Enviamos agora para o seu e-mail a apresentação completa do{' '}
+                    <strong>{featured.name}</strong> e o comparativo oficial dos nossos 4
+                    empreendimentos em Goiânia e Goianira.
                   </p>
                   <div className="lead-popup-success-actions">
                     <a
@@ -319,7 +318,7 @@ export default function LeadPopup({ forceOpen = false }) {
 
               <div className="lead-popup-trust">
                 <span>
-                  <ShieldCheck size={14} /> Envio a cada 5 dias · Zero spam · Cancelamento em 1
+                  <ShieldCheck size={14} /> Curadoria oficial · Zero spam · Cancelamento em 1
                   clique
                 </span>
                 <span>Atendimento direto: {WHATSAPP_SHOWN}</span>

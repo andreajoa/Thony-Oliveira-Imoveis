@@ -57,8 +57,10 @@ const PROVIDER_SCHEMA = {
   priceRange: 'R$ 481/mês – R$ 990/m²',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Avenida Nossa Senhora das Graças, Qd 11 Lote 25, Residencial Monte Pascoal 2',
     addressLocality: 'Goiânia',
     addressRegion: 'GO',
+    postalCode: '74484-480',
     addressCountry: 'BR',
   },
   geo: {
@@ -1033,13 +1035,13 @@ const legalPages = [
     contentHtml: `
       <div class="tldr-box">
         <strong>Resumo de transparência (LGPD)</strong>
-        <p>Coletamos apenas os dados que você informa voluntariamente no pop-up ou nos canais de atendimento (nome, e-mail, WhatsApp opcional e preferência de empreendimento) exclusivamente para enviar as informações imobiliárias solicitadas e nossa curadoria periódica a cada 5 dias, com opção de cancelamento imediato em 1 clique.</p>
+        <p>Coletamos apenas os dados que você informa voluntariamente nos canais de atendimento do site (nome, e-mail, WhatsApp opcional e preferência de empreendimento) exclusivamente para enviar as apresentações imobiliárias solicitadas e oportunidades selecionadas do portfólio, com opção de cancelamento imediato em 1 clique.</p>
         <div class="byline"><span>Controlador: <strong>Thony Oliveira Imóveis</strong></span><span>Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time></span><span>Goiânia e Goianira · GO</span></div>
       </div>
       <h2>1. Quais dados pessoais coletamos</h2>
-      <p>Quando você se inscreve no pop-up de novidades imobiliárias ou entra em contato pelo site <strong>thonyoliveiraimoveis.online</strong>, podemos coletar: (a) nome completo ou primeiro nome; (b) endereço de e-mail; (c) número de telefone/WhatsApp (quando informado opcionalmente); e (d) empreendimento ou região de interesse em Goiânia, Goianira e Goiás.</p>
-      <h2>2. Finalidade do tratamento e frequência de envio</h2>
-      <p>Os dados são utilizados estritamente para: (a) enviar imediatamente por e-mail o dossiê do empreendimento em destaque; (b) enviar nossa sequência informativa de oportunidades imobiliárias (limitada a 1 envio a cada 5 dias, além de alertas pontuais quando um novo empreendimento entra em comercialização); e (c) responder solicitações de tabelas, Books Digitais e agendamento de visitas presenciais via WhatsApp ${WHATSAPP_SHOWN}.</p>
+      <p>Quando você se inscreve para receber novidades imobiliárias ou entra em contato pelo site <strong>thonyoliveiraimoveis.online</strong>, podemos coletar: (a) nome completo ou primeiro nome; (b) endereço de e-mail; (c) número de telefone/WhatsApp (quando informado opcionalmente); e (d) empreendimento ou região de interesse em Goiânia, Goianira e Goiás.</p>
+      <h2>2. Finalidade do tratamento</h2>
+      <p>Os dados são utilizados estritamente para: (a) enviar por e-mail o dossiê do empreendimento selecionado; (b) enviar nossa curadoria informativa de oportunidades e lançamentos imobiliários em Goiás; e (c) responder solicitações de tabelas, Books Digitais e agendamento de visitas presenciais via WhatsApp ${WHATSAPP_SHOWN}.</p>
       <h2>3. Compartilhamento e operadores seguros</h2>
       <p>Não vendemos nem cedemos sua lista de contato a terceiros não relacionados. Para o disparo seguro e gestão de opt-out dos e-mails, utilizamos infraestrutura autenticada via <strong>Resend</strong> e <strong>Brevo</strong> (com registros SPF, DKIM e DMARC verificados no domínio <code>thonyoliveiraimoveis.online</code>).</p>
       <h2>4. Seus direitos como titular (Art. 18 da LGPD)</h2>
@@ -1094,7 +1096,7 @@ const legalPages = [
     contentHtml: `
       <div class="tldr-box">
         <strong>Cancelamento imediato e respeitoso</strong>
-        <p>Confirme abaixo o seu endereço de e-mail para interromper imediatamente o envio da nossa sequência de 5 em 5 dias. Seu pedido é processado na hora na nossa base.</p>
+        <p>Confirme abaixo o seu endereço de e-mail para interromper imediatamente o envio das nossas oportunidades imobiliárias. Seu pedido é processado na hora na nossa base.</p>
       </div>
       <div style="background:#fff;border:1px solid #dfe1d7;padding:28px;max-width:540px;margin:24px 0;">
         <form id="unsubForm" style="display:flex;flex-direction:column;gap:14px;">

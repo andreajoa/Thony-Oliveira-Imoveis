@@ -27,7 +27,7 @@ export const EMAIL_SEQUENCE = [
     preheader: 'Veja em vídeo os lotes ao lado da UFG em Goiânia e os condomínios da GO-070 em Goianira.',
     hookTitle: 'Seu próximo endereço começa com informação clara e registro em cartório.',
     hookLead:
-      'A partir de hoje, a cada 5 dias você receberá uma curadoria direta com vídeos em loop, imagens oficiais, fichas jurídicas e simulações reais dos melhores loteamentos e condomínios horizontais em Goiânia e Goianira.',
+      'Separamos para você uma curadoria direta com perspectivas oficiais, fichas jurídicas e simulações reais dos melhores loteamentos e condomínios horizontais em Goiânia e Goianira.',
     bullets: [
       'Destaque atual do Pop-up: Residencial Parque Universitário (Goiânia · ao lado da UFG) — lotes residenciais e comerciais a partir de 270 m² e R$ 990/m².',
       'Condomínio Horizontal Terraví Ipês (Goianira · GO-070) — +30 itens de lazer, 115 mil m² de verde, Tour 360° e parcelas a partir de R$ 697,76*.',
@@ -572,7 +572,7 @@ export function renderEmailHtml({
                 <tr>
                   <td style="position:relative;">
                     <a href="${devPageUrl}" style="text-decoration:none;display:block;">
-                      <img src="${loopGifUrl}" alt="Vídeo em loop — ${esc(dev.name)}" width="536" style="width:100%;max-width:536px;height:auto;display:block;">
+                      <img src="${loopGifUrl}" alt="Perspectivas oficiais — ${esc(dev.name)}" width="536" style="width:100%;max-width:536px;height:auto;display:block;">
                     </a>
                   </td>
                 </tr>
@@ -581,7 +581,7 @@ export function renderEmailHtml({
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td style="font-family:'Manrope',Arial,sans-serif;font-size:10px;font-weight:800;letter-spacing:0.16em;color:#e3bc88;text-transform:uppercase;">
-                          ▶ VÍDEO EM LOOP · ${esc(dev.shortName)} (${esc(dev.city)} – GO)
+                          PERSPECTIVAS OFICIAIS · ${esc(dev.shortName)} (${esc(dev.city)} – GO)
                         </td>
                         <td align="right">
                           <a href="${devPageUrl}" style="font-family:'Manrope',Arial,sans-serif;font-size:11px;font-weight:800;color:#ffffff;text-decoration:underline;">Ver página completa ↗</a>
@@ -691,9 +691,10 @@ export function renderEmailHtml({
           <tr>
             <td class="pad-main" style="padding:28px 32px;background-color:#17382e;color:#cbd5cd;font-family:'DM Sans',Arial,sans-serif;font-size:11.5px;line-height:1.7;">
               <strong style="color:#ffffff;font-family:'Manrope',Arial,sans-serif;font-size:13px;letter-spacing:0.06em;">THONY OLIVEIRA IMÓVEIS · GOIÂNIA &amp; GOIANIRA, GOIÁS</strong><br>
+              Av. Nossa Senhora das Graças, Qd 11 Lote 25 — Residencial Monte Pascoal 2, Goiânia – GO, CEP 74484-480<br>
               Atendimento consultivo direto · WhatsApp: <a href="${waUrl}" style="color:#e3bc88;text-decoration:underline;">${WHATSAPP_SHOWN}</a> · Site oficial: <a href="${SITE_ORIGIN}/" style="color:#e3bc88;text-decoration:underline;">thonyoliveiraimoveis.online</a><br><br>
               <span style="color:#9eb0a3;font-size:11px;">
-                *Aviso legal: valores, parcelas e condições comerciais citados são referenciais, extraídos das tabelas e lâminas oficiais das respectivas incorporadoras, estando sujeitos a alteração e à disponibilidade de unidades no momento da consulta. Você recebe este e-mail porque cadastrou seu endereço no pop-up oficial do site thonyoliveiraimoveis.online para receber novidades imobiliárias a cada 5 dias.
+                *Aviso legal: valores, parcelas e condições comerciais citados são referenciais, extraídos das tabelas e lâminas oficiais das respectivas incorporadoras, estando sujeitos a alteração e à disponibilidade de unidades no momento da consulta. Você recebe este e-mail porque cadastrou seu endereço no site oficial thonyoliveiraimoveis.online para acompanhar oportunidades e lançamentos imobiliários.
               </span>
               <hr style="border:0;border-top:1px solid #2b4f43;margin:16px 0;">
               <div style="font-size:11px;line-height:1.9;">
