@@ -41,28 +41,38 @@ const creci = (import.meta.env.VITE_CRECI || '').trim();
 const keywordGroups = [
   {
     title: 'Empreendimentos reais',
-    links: EMPREENDIMENTOS.map((e) => [e.name, `/empreendimentos/${e.slug}/`]),
-  },
-  {
-    title: 'Por tipo e objetivo',
     links: [
-      ['Condomínios fechados em Goianira', '/explorar/condominio-fechado-goianira/'],
-      ['Lotes em Goianira (GO-070)', '/explorar/lotes-em-goianira/'],
-      ['Terrenos perto da UFG em Goiânia', '/explorar/terrenos-perto-ufg-goiania/'],
-      ['Terrenos à venda em Goiânia', '/explorar/terrenos-a-venda-em-goiania/'],
-      ['Casas em condomínio fechado', '/explorar/casas-em-condominio-fechado-goiania/'],
-      ['Imóveis de alto padrão', '/explorar/imoveis-alto-padrao-goiania/'],
+      ...EMPREENDIMENTOS.map((e) => [e.name, `/empreendimentos/${e.slug}/`]),
+      ['Melhores condomínios horizontais em Goiânia e região', '/explorar/melhores-condominios-horizontais-goiania-regiao/'],
+      ['Como investir em terrenos em Goiânia e Goiás', '/explorar/investir-em-terrenos-goiania-goias/'],
+      ['Lotes com parcelamento direto com a urbanizadora', '/explorar/financiamento-direto-lote-goiania-goianira/'],
     ],
   },
   {
-    title: 'Por região',
+    title: 'Goiás e Região Metropolitana',
     links: [
+      ['Imóveis e lotes em Goiás (Guia estadual)', '/explorar/imoveis-em-goias/'],
+      ['Loteamentos planejados em Goiás', '/explorar/loteamentos-em-goias/'],
+      ['Região Metropolitana de Goiânia (RMG)', '/explorar/regiao-metropolitana-de-goiania/'],
+      ['Eixo GO-070 (Goiânia · Goianira · Inhumas)', '/explorar/imoveis-eixo-go-070/'],
       ['Imóveis em Goianira', '/explorar/imoveis-em-goianira/'],
+      ['Imóveis perto de Trindade (GO)', '/explorar/imoveis-em-trindade-goias/'],
+      ['Imóveis perto de Senador Canedo (GO)', '/explorar/imoveis-em-senador-canedo/'],
+      ['Inhumas, Santo Antônio de Goiás e Nerópolis', '/explorar/imoveis-em-neropolis-e-santo-antonio-de-goias/'],
+      ['Anápolis, Hidrolândia e Bela Vista de Goiás', '/explorar/imoveis-em-anapolis-e-regiao/'],
+    ],
+  },
+  {
+    title: 'Goiânia e buscas populares',
+    links: [
+      ['Região Norte de Goiânia (UFG · Perimetral)', '/explorar/lotes-regiao-norte-goiania/'],
+      ['Terrenos perto da UFG em Goiânia', '/explorar/terrenos-perto-ufg-goiania/'],
+      ['Condomínios fechados em Goianira', '/explorar/condominio-fechado-goianira/'],
+      ['Lotes à venda em Goianira', '/explorar/lotes-em-goianira/'],
+      ['Terrenos à venda em Goiânia', '/explorar/terrenos-a-venda-em-goiania/'],
       ['Imóveis em Goiânia', '/explorar/imoveis-em-goiania/'],
-      ['Setor Bueno', '/explorar/imoveis-setor-bueno-goiania/'],
-      ['Setor Marista', '/explorar/imoveis-setor-marista-goiania/'],
-      ['Jardim Goiás', '/explorar/imoveis-jardim-goias/'],
       ['Aparecida de Goiânia', '/explorar/imoveis-em-aparecida-de-goiania/'],
+      ['Setor Bueno, Marista e Jardim Goiás', '/explorar/imoveis-setor-bueno-goiania/'],
     ],
   },
 ];
@@ -795,11 +805,12 @@ function Footer() {
           ))}
         </div>
         <div>
-          <span>GUIAS REGIONAIS</span>
-          <a href="/explorar/terrenos-perto-ufg-goiania/">Região Norte · UFG</a>
-          <a href="/explorar/imoveis-em-goianira/">Imóveis em Goianira</a>
-          <a href="/explorar/condominio-fechado-goianira/">Condomínios em Goianira</a>
-          <a href="/explorar/terrenos-a-venda-em-goiania/">Terrenos em Goiânia</a>
+          <span>GUIAS REGIONAIS · GOIÁS</span>
+          <a href="/explorar/imoveis-em-goias/">Imóveis em Goiás</a>
+          <a href="/explorar/regiao-metropolitana-de-goiania/">Região Metropolitana</a>
+          <a href="/explorar/lotes-regiao-norte-goiania/">Região Norte · UFG</a>
+          <a href="/explorar/imoveis-eixo-go-070/">Eixo GO-070 · Goianira</a>
+          <a href="/explorar/investir-em-terrenos-goiania-goias/">Investir em Terrenos</a>
         </div>
         <div>
           <span>ATENDIMENTO</span>

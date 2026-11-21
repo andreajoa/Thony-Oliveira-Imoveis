@@ -15,6 +15,73 @@ const site = (process.env.SITE_URL || 'https://thonyoliveiraimoveis.online').rep
   ''
 );
 const active = process.env.VITE_DEMO_MODE !== 'true';
+const UPDATED_ISO = '2026-11-21';
+const UPDATED_LABEL = '21/11/2026';
+
+const GOIAS_CITIES = [
+  'Goiânia',
+  'Goianira',
+  'Aparecida de Goiânia',
+  'Trindade',
+  'Senador Canedo',
+  'Inhumas',
+  'Santo Antônio de Goiás',
+  'Nerópolis',
+  'Anápolis',
+  'Hidrolândia',
+  'Bela Vista de Goiás',
+  'Abadia de Goiás',
+  'Aragoiânia',
+  'Brazabrantes',
+  'Caturaí',
+  'Guapó',
+  'Bonfinópolis',
+  'Goianápolis',
+];
+
+const AREA_SERVED_SCHEMA = [
+  { '@type': 'State', name: 'Goiás', sameAs: 'https://pt.wikipedia.org/wiki/Goi%C3%A1s' },
+  ...GOIAS_CITIES.map((city) => ({
+    '@type': 'City',
+    name: `${city}, GO`,
+  })),
+];
+
+const PROVIDER_SCHEMA = {
+  '@type': 'RealEstateAgent',
+  '@id': `${site}/#organization`,
+  name: 'Thony Oliveira Imóveis',
+  url: `${site}/`,
+  telephone: `+${WA}`,
+  image: `${site}/empreendimentos/parque-universitario/01-aerea-ufg.webp`,
+  priceRange: 'R$ 481/mês – R$ 990/m²',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Goiânia',
+    addressRegion: 'GO',
+    addressCountry: 'BR',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -16.6869,
+    longitude: -49.2648,
+  },
+  areaServed: AREA_SERVED_SCHEMA,
+  knowsAbout: [
+    'Loteamentos planejados em Goiânia',
+    'Condomínios horizontais fechados em Goianira e Goiás',
+    'Terrenos ao lado da UFG Campus Samambaia',
+    'Imóveis no eixo GO-070 e Região Metropolitana de Goiânia',
+    'Parcelamento direto de lotes com urbanizadora em Goiás',
+  ],
+};
+
+const AUTHOR_SCHEMA = {
+  '@type': 'Person',
+  name: 'Thony Oliveira',
+  jobTitle: 'Consultor Imobiliário — Loteamentos e Condomínios em Goiás',
+  worksFor: { '@id': `${site}/#organization` },
+};
 
 const WA_ICON =
   '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>';
@@ -26,27 +93,97 @@ const escapeHtml = (t) =>
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;');
 
-// 1) Atualiza dist/index.html com robots, canonical e fallback semântico real
+// 1) Atualiza dist/index.html com robots, canonical, JSON-LD completo (SEO + GEO) e fallback semântico real
 const homeFile = path.join(output, 'index.html');
 if (fs.existsSync(homeFile)) {
   let homeHtml = fs.readFileSync(homeFile, 'utf8');
   if (active) {
-    homeHtml = homeHtml.replace('content="noindex,nofollow"', 'content="index,follow"');
-    if (site.startsWith('https://') && site !== 'https://example.com') {
-      homeHtml = homeHtml.replace('</head>', `<link rel="canonical" href="${site}/"></head>`);
-    }
+    homeHtml = homeHtml.replace('content="noindex,nofollow"', 'content="index,follow,max-image-preview:large,max-snippet:-1"');
   } else {
-    homeHtml = homeHtml.replace('content="index,follow"', 'content="noindex,nofollow"');
+    homeHtml = homeHtml.replace(/content="index,follow[^"]*"/, 'content="noindex,nofollow"');
   }
 
-  const devLinksHtml = EMPREENDIMENTOS.map(
+  const homeSchema = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      PROVIDER_SCHEMA,
+      {
+        '@type': 'WebSite',
+        '@id': `${site}/#website`,
+        url: `${site}/`,
+        name: 'Thony Oliveira Imóveis',
+        inLanguage: 'pt-BR',
+        publisher: { '@id': `${site}/#organization` },
+        datePublished: '2026-11-20',
+        dateModified: UPDATED_ISO,
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Empreendimentos imobiliários em Goiânia e Goianira — Thony Oliveira Imóveis',
+        itemListElement: EMPREENDIMENTOS.map((e, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: e.name,
+          url: `${site}/empreendimentos/${e.slug}/`,
+          image: `${site}${e.cover}`,
+          description: e.seoDescription,
+        })),
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Quais regiões de Goiás a Thony Oliveira Imóveis atende?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Atendemos Goiânia (com destaque para a Região Norte ao lado da UFG), Goianira (eixo da GO-070) e toda a Região Metropolitana de Goiânia e Estado de Goiás — incluindo Aparecida de Goiânia, Trindade, Senador Canedo, Inhumas, Santo Antônio de Goiás, Nerópolis e Anápolis.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Qual a diferença entre loteamento aberto e condomínio fechado em Goiânia e Goianira?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No loteamento aberto (como Residencial Parque Universitário e Residencial Flora Nogueira) não há taxa mensal de condomínio e há maior liberdade construtiva, incluindo lotes comerciais no Parque Universitário. Já no condomínio horizontal fechado (como Terraví Ipês e Condomínio Pinheiros) há portaria 24h, perímetro fechado e clube privativo completo.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Os empreendimentos anunciados têm registro em cartório?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Sim. Todos os projetos publicados trazem ficha jurídica verificável, como Decreto 170/2025 e Matrícula 50.510 (R-4) no Terraví Ipês, Decretos 122 e 148/2025 e Matrícula 45.383 (R-5) no Condomínio Pinheiros e Decretos 118 e 147/2025 e Matrícula 50.000 (R-4) no Flora Nogueira.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'É possível comprar lote com parcelamento direto com a urbanizadora em Goiás?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Sim. Os 4 empreendimentos oferecem entrada facilitada e parcelamento direto com a loteadora/incorporadora sem burocracia bancária, com referência de parcelas a partir de R$ 481,76 no Flora Nogueira, R$ 697,76 no Terraví Ipês, R$ 949,15 no Pinheiros e lotes a partir de R$ 990/m² no Parque Universitário (sujeito a tabela vigente).',
+            },
+          },
+        ],
+      },
+    ],
+  });
+
+  const headInject =
+    (site.startsWith('https://') && site !== 'https://example.com'
+      ? `<link rel="canonical" href="${site}/"><link rel="alternate" type="text/plain" title="LLMs.txt" href="${site}/llms.txt">`
+      : '') + `<script type="application/ld+json">${homeSchema}</script>`;
+
+  homeHtml = homeHtml.replace('</head>', `${headInject}</head>`);
+
+  const devRowsHtml = EMPREENDIMENTOS.map(
     (e) =>
-      `<li><a href="/empreendimentos/${e.slug}/">${escapeHtml(e.name)} — ${escapeHtml(e.region)} (${escapeHtml(e.priceHighlight)})</a></li>`
+      `<tr><td><a href="/empreendimentos/${e.slug}/">${escapeHtml(e.name)}</a></td><td>${escapeHtml(e.region)}</td><td>${escapeHtml(e.modality)}</td><td>${escapeHtml(e.compare.lotes)} (${escapeHtml(e.compare.metragem)})</td><td>${escapeHtml(e.priceHighlight)}</td></tr>`
   ).join('');
 
   homeHtml = homeHtml.replace(
     '<div id="root"></div>',
-    `<div id="root"><main><section><h1>Thony Oliveira Imóveis: Loteamentos e Condomínios em Goiânia e Goianira</h1><p>Conheça nossos 4 empreendimentos selecionados: Residencial Parque Universitário (ao lado da UFG), Condomínio Horizontal Terraví Ipês, Condomínio Horizontal Pinheiros e Residencial Flora Nogueira.</p><ul>${devLinksHtml}</ul></section></main></div>`
+    `<div id="root"><main><section><h1>Thony Oliveira Imóveis: Lotes, Terrenos e Condomínios em Goiânia, Goianira e Goiás</h1><p>Atendimento imobiliário consultivo em Goiânia (Região Norte, ao lado da UFG), Goianira (eixo GO-070), Região Metropolitana de Goiânia e Goiás. Curadoria: Thony Oliveira · Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time> · WhatsApp ${WHATSAPP_SHOWN}.</p><h2>Comparativo oficial dos 4 empreendimentos disponíveis</h2><table><thead><tr><th>Empreendimento</th><th>Região</th><th>Modalidade</th><th>Lotes e Metragem</th><th>Condição Referencial</th></tr></thead><tbody>${devRowsHtml}</tbody></table><h2>Guias regionais de imóveis em Goiás</h2><ul><li><a href="/explorar/imoveis-em-goias/">Imóveis e lotes em Goiás</a></li><li><a href="/explorar/regiao-metropolitana-de-goiania/">Região Metropolitana de Goiânia</a></li><li><a href="/explorar/imoveis-em-goianira/">Imóveis em Goianira (GO-070)</a></li><li><a href="/explorar/lotes-regiao-norte-goiania/">Região Norte de Goiânia e UFG</a></li><li><a href="/explorar/investir-em-terrenos-goiania-goias/">Como investir em terrenos em Goiás</a></li></ul></section></main></div>`
   );
   fs.writeFileSync(homeFile, homeHtml);
 }
@@ -55,12 +192,16 @@ if (fs.existsSync(homeFile)) {
 function renderEmpreendimentoPage(e) {
   const url = `/empreendimentos/${e.slug}/`;
   const fullUrl = `${site}${url}`;
-  const robots = active ? 'index,follow' : 'noindex,nofollow';
+  const robots = active ? 'index,follow,max-image-preview:large,max-snippet:-1' : 'noindex,nofollow';
   const canonical =
     site && site !== 'https://example.com' ? `<link rel="canonical" href="${fullUrl}">` : '';
   const waMain = waLink(e.whatsappMessage, WA);
   const waBook = waLink(e.bookWhatsappMessage, WA);
   const others = EMPREENDIMENTOS.filter((x) => x.id !== e.id);
+  const geoCoords =
+    e.city === 'Goiânia'
+      ? { lat: -16.6038, lng: -49.2665 }
+      : { lat: -16.4961, lng: -49.4264 };
 
   const schemaGraph = JSON.stringify({
     '@context': 'https://schema.org',
@@ -69,7 +210,7 @@ function renderEmpreendimentoPage(e) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Início', item: `${site}/` },
-          { '@type': 'ListItem', position: 2, name: 'Empreendimentos', item: `${site}/#imoveis` },
+          { '@type': 'ListItem', position: 2, name: 'Empreendimentos em Goiás', item: `${site}/#imoveis` },
           { '@type': 'ListItem', position: 3, name: e.name, item: fullUrl },
         ],
       },
@@ -78,14 +219,37 @@ function renderEmpreendimentoPage(e) {
         name: e.name,
         description: e.seoDescription,
         url: fullUrl,
+        datePosted: '2026-11-20',
         image: `${site}${e.cover}`,
-        areaServed: `${e.city}, Goiás, Brasil`,
-        provider: {
-          '@type': 'RealEstateAgent',
-          name: 'Thony Oliveira Imóveis',
-          telephone: `+${WA}`,
-          url: `${site}/`,
+        areaServed: `${e.city}, Região Metropolitana de Goiânia, Goiás, Brasil`,
+        contentLocation: {
+          '@type': 'Place',
+          name: `${e.name} — ${e.city}, GO`,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: e.city,
+            addressRegion: 'GO',
+            addressCountry: 'BR',
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: geoCoords.lat,
+            longitude: geoCoords.lng,
+          },
         },
+        provider: PROVIDER_SCHEMA,
+      },
+      {
+        '@type': 'Article',
+        headline: e.seoTitle,
+        description: e.seoDescription,
+        image: `${site}${e.cover}`,
+        datePublished: '2026-11-20',
+        dateModified: UPDATED_ISO,
+        inLanguage: 'pt-BR',
+        author: AUTHOR_SCHEMA,
+        publisher: { '@id': `${site}/#organization` },
+        mainEntityOfPage: fullUrl,
       },
       {
         '@type': 'FAQPage',
@@ -137,13 +301,24 @@ function renderEmpreendimentoPage(e) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#17382e">
 <meta name="robots" content="${robots}">
+<meta name="author" content="Thony Oliveira Imóveis">
+<meta name="geo.region" content="BR-GO">
+<meta name="geo.placename" content="${escapeHtml(e.city)}, Goiás">
+<meta name="geo.position" content="${geoCoords.lat};${geoCoords.lng}">
 <title>${escapeHtml(e.seoTitle)} | Thony Oliveira Imóveis</title>
 <meta name="description" content="${escapeHtml(e.seoDescription)}">
 ${canonical}
 <meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Thony Oliveira Imóveis">
+<meta property="og:url" content="${fullUrl}">
 <meta property="og:title" content="${escapeHtml(e.seoTitle)} | Thony Oliveira Imóveis">
 <meta property="og:description" content="${escapeHtml(e.seoDescription)}">
 <meta property="og:image" content="${site}${e.cover}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeHtml(e.seoTitle)} | Thony Oliveira Imóveis">
+<meta name="twitter:description" content="${escapeHtml(e.seoDescription)}">
+<meta name="twitter:image" content="${site}${e.cover}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -212,6 +387,11 @@ ${canonical}
       <div class="overview-copy">
         <span class="eyebrow">SOBRE O EMPREENDIMENTO</span>
         <h2>Por que escolher o <em>${escapeHtml(e.shortName)}.</em></h2>
+        <div style="margin:18px 0 22px;padding:18px 20px;background:#f3f1e9;border-left:4px solid #b58a5f;">
+          <strong style="display:block;font-size:10px;letter-spacing:.16em;color:#9f734b;margin-bottom:6px;">RESUMO DIRETO · DADOS OFICIAIS</strong>
+          <p style="margin:0;font-size:14px;line-height:1.8;color:#17382e;">O <strong>${escapeHtml(e.name)}</strong> é um ${escapeHtml(e.modality.toLowerCase())} em <strong>${escapeHtml(e.city)} (GO)</strong> realizado por ${escapeHtml(e.developers)}, com ${escapeHtml(e.compare.lotes)} (${escapeHtml(e.compare.metragem)}), ${escapeHtml(e.compare.diferencial.toLowerCase())} e referência comercial ${escapeHtml(e.priceHighlight.toLowerCase())}.</p>
+          <p style="margin:10px 0 0;font-size:11.5px;color:#68766b;">Curadoria técnica: <strong>Thony Oliveira</strong> · Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time> · Atendimento em Goiânia, Goianira e Goiás.</p>
+        </div>
         ${e.summary.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
       </div>
 
@@ -407,8 +587,134 @@ for (const e of EMPREENDIMENTOS) {
   fs.writeFileSync(path.join(folder, 'index.html'), renderEmpreendimentoPage(e));
 }
 
-// 3) Páginas regionais e de busca (/explorar/<slug>/index.html) — conectadas aos empreendimentos reais
+// 3) Páginas regionais e de busca (/explorar/<slug>/index.html) — Goiás, Goiânia, Goianira e RMG
 const exploreData = [
+  [
+    'imoveis-em-goias',
+    'Imóveis, Lotes e Condomínios em Goiás',
+    'Guia completo para comprar terrenos, lotes em loteamento planejado e condomínios fechados em Goiás, com foco em Goiânia, Goianira e Região Metropolitana.',
+    'O mercado imobiliário de Goiás é um dos mais dinâmicos do Centro-Oeste, impulsionado pelo crescimento populacional da Região Metropolitana de Goiânia (RMG), pelo agronegócio e pelos polos universitários e industriais. Quem busca segurança patrimonial encontra hoje duas frentes principais: lotes na capital ao lado da UFG e condomínios horizontais e loteamentos de alta valorização no eixo da GO-070 em Goianira.',
+    'Compare metragem, registro em cartório (matrícula e decreto), infraestrutura entregue e condições de parcelamento direto antes de investir em Goiás.',
+    '/empreendimentos/parque-universitario/01-aerea-ufg.webp',
+    ['parque-universitario', 'terravi-ipes', 'condominio-pinheiros', 'flora-nogueira'],
+  ],
+  [
+    'loteamentos-em-goias',
+    'Loteamentos Planejados e Condomínios Fechados em Goiás',
+    'Compare loteamentos abertos e condomínios horizontais registrados em Goiás com entrada facilitada e parcelamento direto com a urbanizadora.',
+    'Em Goiás, a escolha entre loteamento aberto (sem taxa de condomínio e com maior liberdade de uso) e condomínio horizontal fechado (portaria 24h, muros e clube privativo) define o custo mensal e o perfil de revenda do patrimônio. O portfólio da Thony Oliveira Imóveis reúne projetos aprovados em Goiânia e Goianira com registro verificável em cartório.',
+    'Avalie obras já executadas (como asfalto e drenagem no Flora Nogueira), localização universitária (Parque Universitário) e lazer completo (Terraví Ipês e Pinheiros).',
+    '/empreendimentos/terravi-ipes/03-vista-geral.webp',
+    ['parque-universitario', 'flora-nogueira', 'terravi-ipes', 'condominio-pinheiros'],
+  ],
+  [
+    'regiao-metropolitana-de-goiania',
+    'Imóveis e Lotes na Região Metropolitana de Goiânia (RMG)',
+    'Onde comprar terrenos e lotes na Região Metropolitana de Goiânia: compare Goiânia Norte (UFG), Goianira (GO-070), Aparecida, Trindade e Senador Canedo.',
+    'A Região Metropolitana de Goiânia concentra mais de 2,5 milhões de habitantes e apresenta forte deslocamento de famílias em busca de terrenos maiores, áreas verdes e condomínios horizontais com metro quadrado mais acessível do que os setores centrais da capital. Goianira (5º município mais populoso da RMG, com crescimento econômico de 36,2% nos últimos 5 anos segundo o MTE 2025) e a Região Norte de Goiânia lideram em custo-benefício.',
+    'Compare o tempo real de deslocamento pela GO-070 e Perimetral Norte até hospitais, shoppings e universidades antes de escolher seu município na RMG.',
+    '/empreendimentos/terravi-ipes/01-portaria.webp',
+    ['parque-universitario', 'terravi-ipes', 'condominio-pinheiros', 'flora-nogueira'],
+  ],
+  [
+    'lotes-regiao-norte-goiania',
+    'Lotes e Terrenos na Região Norte de Goiânia',
+    'Terrenos residenciais e comerciais a partir de 270 m² na Região Norte de Goiânia, ao lado da UFG Campus Samambaia e Perimetral Norte.',
+    'A Região Norte de Goiânia vive uma fase de consolidação urbana acelerada graças ao Campus Samambaia da UFG, ao Passeio das Águas Shopping, ao Aeroporto Santa Genoveva e à conexão pela Perimetral Norte. O Residencial Parque Universitário, realizado pela Landcorp e Ética Urbanismo, traz 528 lotes (480 residenciais e 48 comerciais) e mais de 48 mil m² de natureza e lazer a partir de R$ 990/m².',
+    'Ideal para moradia próxima à UFG, comércio local voltado à comunidade universitária e investimento com alta liquidez na capital.',
+    '/empreendimentos/parque-universitario/02-aerea-quadras.webp',
+    ['parque-universitario', 'terravi-ipes', 'condominio-pinheiros'],
+  ],
+  [
+    'imoveis-eixo-go-070',
+    'Imóveis e Condomínios no Eixo GO-070 (Goiânia · Goianira · Inhumas)',
+    'Conheça o corredor imobiliário da rodovia duplicada GO-070: condomínios fechados e loteamentos em Goianira a 15–19 minutos do Portal Shopping e HUGOL.',
+    'A duplicação e a consolidação do eixo da GO-070 transformaram a saída noroeste de Goiânia em um dos vetores de maior valorização de Goiás. A apenas 800–900 metros da rodovia em Goianira estão empreendimentos de alto potencial como Condomínio Horizontal Terraví Ipês (+30 itens de lazer e Tour 360°), Condomínio Horizontal Pinheiros (apenas 109 lotes com lago de pesca) e Residencial Flora Nogueira (loteamento aberto com asfalto entregue).',
+    'Para quem trabalha na região noroeste de Goiânia, HUGOL, Portal Shopping ou cidades do eixo GO-070, Goianira entrega terreno maior por uma fração do preço da capital.',
+    '/empreendimentos/condominio-pinheiros/07-drone-regiao.webp',
+    ['terravi-ipes', 'condominio-pinheiros', 'flora-nogueira'],
+  ],
+  [
+    'imoveis-em-trindade-goias',
+    'Imóveis e Lotes perto de Trindade (GO)',
+    'Procurando terreno ou condomínio fechado perto de Trindade, Goiás? Compare opções na vizinha Goianira (GO-070) e Goiânia com parcelamento direto.',
+    'Quem busca morar ou investir na região de Trindade (eixo oeste/noroeste da Região Metropolitana de Goiânia) frequentemente compara Trindade com Goianira e Goiânia pela facilidade de ligação regional, proximidade do HUGOL e do Portal Shopping e oferta de condomínios horizontais novos com registro em cartório.',
+    'Compare a exclusividade de 109 lotes com lago no Pinheiros, o clube do Terraví Ipês e as parcelas acessíveis do Flora Nogueira.',
+    '/empreendimentos/condominio-pinheiros/01-portaria.webp',
+    ['condominio-pinheiros', 'terravi-ipes', 'flora-nogueira'],
+  ],
+  [
+    'imoveis-em-senador-canedo',
+    'Imóveis e Terrenos perto de Senador Canedo (GO)',
+    'Compare terrenos e condomínios fechados na Região Metropolitana de Goiânia: Senador Canedo, Região Norte de Goiânia (UFG) e eixo GO-070.',
+    'Senador Canedo é um dos vetores de expansão da Grande Goiânia, mas compradores atentos também comparam a Região Norte de Goiânia (ao lado da UFG, dentro da capital) e o eixo duplicado da GO-070 em Goianira para encontrar maior área verde preservada, menor densidade de lotes e parcelas diretas mais competitivas.',
+    'Avalie o valor por metro quadrado na capital (Parque Universitário a partir de R$ 990/m²) e os condomínios fechados em Goianira.',
+    '/empreendimentos/parque-universitario/04-praca-aerea.webp',
+    ['parque-universitario', 'terravi-ipes', 'condominio-pinheiros'],
+  ],
+  [
+    'imoveis-em-inhumas-goias',
+    'Lotes e Condomínios entre Inhumas, Goianira e Goiânia (GO-070)',
+    'Moradores e investidores de Inhumas encontram no eixo da GO-070 em Goianira condomínios fechados e loteamentos modernos a minutos de Goiânia.',
+    'Ligada diretamente a Goianira e Goiânia pela rodovia duplicada GO-070, a população de Inhumas e Caturaí usa o eixo GO-070 como caminho natural para investir ou morar mais perto da capital, do HUGOL e do Portal Shopping sem abrir mão de tranquilidade e área verde.',
+    'Conheça o Terraví Ipês (+115 mil m² de área verde e Tour 360°), o Condomínio Pinheiros (lago de pesca) e o Residencial Flora Nogueira.',
+    '/empreendimentos/flora-nogueira/01-drone.webp',
+    ['terravi-ipes', 'condominio-pinheiros', 'flora-nogueira'],
+  ],
+  [
+    'imoveis-em-anapolis-e-regiao',
+    'Investir em Lotes entre Anápolis e Goiânia (Goiás)',
+    'Quer investir em terrenos no eixo econômico Goiânia–Anápolis? Conheça loteamentos na saída norte de Goiânia (UFG) e condomínios na RMG.',
+    'O eixo Goiânia–Anápolis forma o principal corredor econômico, logístico e universitário de Goiás. Para investidores de Anápolis que buscam diversificação imobiliária na capital e Região Metropolitana, a Região Norte de Goiânia (ao lado da UFG e com rápido acesso à BR-153) e os condomínios fechados de Goianira oferecem liquidez, registro formal e financiamento direto.',
+    'Destaque para o Residencial Parque Universitário na saída norte de Goiânia, além de Terraví Ipês e Condomínio Pinheiros.',
+    '/empreendimentos/parque-universitario/01-aerea-ufg.webp',
+    ['parque-universitario', 'terravi-ipes', 'condominio-pinheiros'],
+  ],
+  [
+    'imoveis-em-neropolis-e-santo-antonio-de-goias',
+    'Terrenos perto de Santo Antônio de Goiás e Nerópolis',
+    'Loteamentos e condomínios próximos a Santo Antônio de Goiás, Nerópolis e Região Norte de Goiânia (Campus Samambaia da UFG).',
+    'Santo Antônio de Goiás e Nerópolis fazem divisa imediata com a Região Norte de Goiânia (GO-080 / Campus Samambaia da UFG). O Residencial Parque Universitário, ao lado da UFG, atende diretamente quem busca morar na capital mantendo proximidade com Santo Antônio de Goiás, Nerópolis, Embrapa e a saída norte de Goiânia.',
+    'Confira também os condomínios horizontais de Goianira pela conexão rápida com a região noroeste.',
+    '/empreendimentos/parque-universitario/03-infraestrutura.webp',
+    ['parque-universitario', 'condominio-pinheiros', 'flora-nogueira'],
+  ],
+  [
+    'imoveis-em-hidrolandia-e-bela-vista-de-goias',
+    'Condomínios Horizontais em Goiás: Hidrolândia, Bela Vista e Goianira',
+    'Comparando condomínios fechados com natureza em Hidrolândia, Bela Vista de Goiás ou Goianira? Veja diferenciais de lazer, lago e preço por m².',
+    'Famílias que pesquisam condomínios horizontais com contato com a natureza em Hidrolândia e Bela Vista de Goiás encontram em Goianira (GO-070) uma alternativa surpreendente em custo por metro quadrado, infraestrutura de clube e proximidade de hospitais e shoppings da capital — como o lago privativo de +5 mil m² no Pinheiros e os +115 mil m² de verde no Terraví Ipês.',
+    'Compare distância até o seu trabalho em Goiânia, número total de lotes e valor das parcelas mensais.',
+    '/empreendimentos/condominio-pinheiros/02-lago-pista.webp',
+    ['condominio-pinheiros', 'terravi-ipes', 'parque-universitario'],
+  ],
+  [
+    'investir-em-terrenos-goiania-goias',
+    'Como Investir em Terrenos e Lotes em Goiânia e Goiás (Guia 2026)',
+    'Guia prático baseado em dados reais para investir em terrenos em Goiás: valorização em Goianira (+36,2%), demanda da UFG em Goiânia e documentação.',
+    'Investir em lotes bem localizados na planta ou em fase de obras na Grande Goiânia combina ticket de entrada reduzido, parcelamento direto sem burocracia bancária e forte ganho de capital até a entrega. Os quatro fatores decisivos são: (1) matrícula registrada no Cartório de Registro de Imóveis e decreto municipal, (2) vetor econômico comprovado (como o entorno da UFG ou a GO-070 em Goianira), (3) reputação da urbanizadora e (4) relação entre valor da parcela e valor de revenda após entrega.',
+    'Compare Parque Universitário (a partir de R$ 990/m² em Goiânia), Flora Nogueira (parcelas a partir de R$ 481,76* com asfalto pronto), Terraví Ipês (R$ 697,76*) e Pinheiros (109 lotes, R$ 949,15*).',
+    '/empreendimentos/parque-universitario/01-aerea-ufg.webp',
+    ['parque-universitario', 'flora-nogueira', 'terravi-ipes', 'condominio-pinheiros'],
+  ],
+  [
+    'financiamento-direto-lote-goiania-goianira',
+    'Lotes com Parcelamento Direto com a Urbanizadora em Goiânia e Goianira',
+    'Compre seu terreno em Goiânia ou Goianira sem banco: entrada facilitada e parcelamento direto com parcelas referenciais a partir de R$ 481,76*.',
+    'O parcelamento direto com a loteadora/incorporadora dispensa comprovação bancária complexa e permite escolher planos curtos, fixos ou longos (geralmente corrigidos anualmente pelo IPCA). No portfólio da Thony Oliveira Imóveis há opções registradas em cartório com entrada parcelável e condições promocionais de tabela.',
+    'Solicite pelo WhatsApp (62) 98529-2886 a tabela vigente e uma simulação exata para a metragem desejada.',
+    '/empreendimentos/flora-nogueira/02-quadra-praca.webp',
+    ['flora-nogueira', 'terravi-ipes', 'condominio-pinheiros', 'parque-universitario'],
+  ],
+  [
+    'melhores-condominios-horizontais-goiania-regiao',
+    'Melhores Condomínios Horizontais em Goiânia e Região Metropolitana',
+    'Compare os principais condomínios horizontais fechados na Região Metropolitana de Goiânia: Terraví Ipês (+30 itens de lazer) e Pinheiros (109 lotes + lago).',
+    'Ao escolher um condomínio horizontal fechado na Grande Goiânia, dois perfis se destacam: quem prioriza estrutura de clube resort completa (como o Condomínio Horizontal Terraví Ipês, com 578 lotes, +115 mil m² de verde, parque aquático de borda infinita, Arena Gamer e Tour Virtual 360°) e quem busca máxima privacidade e baixa densidade (como o Condomínio Horizontal Pinheiros, com apenas 109 lotes de 287 a 486 m² e lago privativo de +5 mil m² para pesca).',
+    'Ambos ficam no eixo valorizado da GO-070 em Goianira, com registro em cartório e previsão de entrega em 2029.',
+    '/empreendimentos/terravi-ipes/02-parque-aquatico.webp',
+    ['terravi-ipes', 'condominio-pinheiros'],
+  ],
   [
     'imoveis-em-goianira',
     'Imóveis em Goianira (Eixo GO-070)',
@@ -587,10 +893,16 @@ const devById = Object.fromEntries(EMPREENDIMENTOS.map((e) => [e.id, e]));
 function renderExplorePage(r, index) {
   const [slug, title, description, body, takeaway, image, devIds] = r;
   const url = `/explorar/${slug}/`;
+  const fullUrl = `${site}${url}`;
   const canonical =
-    site && site !== 'https://example.com' ? `<link rel="canonical" href="${site}${url}">` : '';
-  const robots = active ? 'index,follow' : 'noindex,nofollow';
-  const links = exploreData.filter((_, j) => j !== index).slice(index % 6, (index % 6) + 6);
+    site && site !== 'https://example.com' ? `<link rel="canonical" href="${fullUrl}">` : '';
+  const robots = active ? 'index,follow,max-image-preview:large,max-snippet:-1' : 'noindex,nofollow';
+  const links = [];
+  for (let offset = 1; offset <= 9; offset++) {
+    const pick = exploreData[(index + offset * 3) % exploreData.length];
+    if (pick[0] !== slug && !links.some((x) => x[0] === pick[0])) links.push(pick);
+    if (links.length === 6) break;
+  }
   const related = links
     .map((x) => `<a href="/explorar/${x[0]}/">${escapeHtml(x[1])} ↗</a>`)
     .join('');
@@ -610,41 +922,90 @@ function renderExplorePage(r, index) {
     )
     .join('');
 
-  const crumbs = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Início', item: `${site}/` },
-      { '@type': 'ListItem', position: 2, name: title, item: `${site}${url}` },
-    ],
-  });
+  const compareRowsHtml = matchedDevs
+    .map(
+      (d) => `<tr>
+        <td><a href="/empreendimentos/${d.slug}/">${escapeHtml(d.shortName)}</a></td>
+        <td>${escapeHtml(d.region)}</td>
+        <td>${escapeHtml(d.modality)}</td>
+        <td>${escapeHtml(d.compare.lotes)} (${escapeHtml(d.compare.metragem)})</td>
+        <td><strong>${escapeHtml(d.priceHighlight)}</strong></td>
+      </tr>`
+    )
+    .join('');
 
   const faq = [
     [
       `Como começar a procurar ${title.toLowerCase()}?`,
-      'Defina orçamento, objetivo (moradia ou investimento) e preferência entre loteamento aberto ou condomínio fechado. Peça o espelho atualizado de unidades e agende visita ao local.',
+      `Defina orçamento, objetivo (moradia ou investimento) e preferência entre loteamento aberto ou condomínio fechado. Peça o espelho atualizado de unidades pelo WhatsApp ${WHATSAPP_SHOWN} e agende visita acompanhada em Goiânia ou Goianira.`,
     ],
     [
-      'O que verificar antes de assinar o contrato de compra de lote?',
-      'Confira o número do decreto municipal de aprovação, o registro da matrícula no Cartório de Registro de Imóveis, o memorial descritivo, o prazo de entrega das obras e o índice de reajuste das parcelas.',
+      'O que verificar antes de assinar o contrato de compra de lote em Goiás?',
+      'Confira sempre o número do decreto municipal de aprovação, o registro da matrícula no Cartório de Registro de Imóveis (CRI), o memorial descritivo, o prazo de entrega das obras e o índice de reajuste das parcelas.',
+    ],
+    [
+      'Os empreendimentos da Thony Oliveira Imóveis oferecem parcelamento direto?',
+      'Sim. Parque Universitário (Goiânia), Terraví Ipês, Condomínio Pinheiros e Residencial Flora Nogueira (Goianira) oferecem planos de pagamento direto com a urbanizadora/incorporadora, com entrada facilitada e tabela atualizada sob consulta.',
     ],
   ];
 
+  const schemaGraph = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Início', item: `${site}/` },
+          { '@type': 'ListItem', position: 2, name: 'Guias Imobiliários em Goiás', item: `${site}/explorar/imoveis-em-goias/` },
+          { '@type': 'ListItem', position: 3, name: title, item: fullUrl },
+        ],
+      },
+      {
+        '@type': 'Article',
+        headline: title,
+        description,
+        image: `${site}${image}`,
+        datePublished: '2026-11-20',
+        dateModified: UPDATED_ISO,
+        inLanguage: 'pt-BR',
+        author: AUTHOR_SCHEMA,
+        publisher: PROVIDER_SCHEMA,
+        mainEntityOfPage: fullUrl,
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: faq.map(([q, a]) => ({
+          '@type': 'Question',
+          name: q,
+          acceptedAnswer: { '@type': 'Answer', text: a },
+        })),
+      },
+    ],
+  });
+
   const waHref = waLink(
-    `Olá, Thony! Vi a página "${title}" no site e quero conhecer os empreendimentos disponíveis.`,
+    `Olá, Thony! Vi a página "${title}" no site e quero conhecer os empreendimentos disponíveis em Goiânia e Goianira.`,
     WA
   );
 
-  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="${robots}"><title>${escapeHtml(title)} | Thony Oliveira Imóveis</title><meta name="description" content="${escapeHtml(description)}">${canonical}<meta property="og:title" content="${escapeHtml(title)} | Thony Oliveira Imóveis"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:image" content="${site}${image}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet"><link rel="stylesheet" href="/landing.css"><script type="application/ld+json">${crumbs}</script></head>
-<body><header><a href="/" class="brand"><span class="badge">T·O</span><span><b>THONY OLIVEIRA</b><small>IMÓVEIS · GOIÂNIA &amp; GOIANIRA</small></span></a><nav><a href="/">Início</a><a href="/#imoveis">Empreendimentos</a><a href="/#comparativo">Comparativo</a><a href="${waHref}" class="nav-contact" target="_blank" rel="noopener noreferrer">WhatsApp ${WHATSAPP_SHOWN} ↗</a></nav></header>
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#17382e"><meta name="robots" content="${robots}"><meta name="author" content="Thony Oliveira Imóveis"><meta name="geo.region" content="BR-GO"><meta name="geo.placename" content="Goiânia e Região Metropolitana, Goiás"><meta name="geo.position" content="-16.6869;-49.2648"><title>${escapeHtml(title)} | Thony Oliveira Imóveis</title><meta name="description" content="${escapeHtml(description)}">${canonical}<meta property="og:type" content="article"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Thony Oliveira Imóveis"><meta property="og:url" content="${fullUrl}"><meta property="og:title" content="${escapeHtml(title)} | Thony Oliveira Imóveis"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:image" content="${site}${image}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)} | Thony Oliveira Imóveis"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${site}${image}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet"><link rel="stylesheet" href="/landing.css"><script type="application/ld+json">${schemaGraph}</script></head>
+<body><header><a href="/" class="brand"><span class="badge">T·O</span><span><b>THONY OLIVEIRA</b><small>IMÓVEIS · GOIÂNIA, GOIANIRA &amp; GOIÁS</small></span></a><nav><a href="/">Início</a><a href="/#imoveis">Empreendimentos</a><a href="/#comparativo">Comparativo</a><a href="${waHref}" class="nav-contact" target="_blank" rel="noopener noreferrer">WhatsApp ${WHATSAPP_SHOWN} ↗</a></nav></header>
 <main>
-<section class="hero"><div class="hero-content"><p class="eyebrow">GOIÂNIA &amp; GOIANIRA · GUIA IMOBILIÁRIO</p><p class="breadcrumbs"><a href="/">Início</a> / Explorar / ${escapeHtml(title)}</p><h1>${escapeHtml(title)}<em>.</em></h1><p class="lead">${escapeHtml(description)}</p><a class="cta" href="${waHref}" target="_blank" rel="noopener noreferrer">FALAR COM THONY NO WHATSAPP ↗</a></div><div class="hero-photo"><img src="${image}" alt="${escapeHtml(title)}"><span>THONY OLIVEIRA IMÓVEIS</span></div></section>
+<section class="hero"><div class="hero-content"><p class="eyebrow">GOIÂNIA, GOIANIRA &amp; GOIÁS · GUIA IMOBILIÁRIO</p><p class="breadcrumbs"><a href="/">Início</a> / <a href="/explorar/imoveis-em-goias/">Goiás</a> / ${escapeHtml(title)}</p><h1>${escapeHtml(title)}<em>.</em></h1><p class="lead">${escapeHtml(description)}</p><a class="cta" href="${waHref}" target="_blank" rel="noopener noreferrer">FALAR COM THONY NO WHATSAPP ↗</a></div><div class="hero-photo"><img src="${image}" alt="${escapeHtml(title)}"><span>THONY OLIVEIRA IMÓVEIS · GOIÁS</span></div></section>
 <section class="featured-devs"><p class="eyebrow">DISPONÍVEIS NO PORTFÓLIO</p><h2>Empreendimentos selecionados para você.</h2><div class="dev-mini-grid">${devsHtml}</div></section>
-<section class="details"><article><p class="eyebrow">ENTENDA SUA BUSCA</p><h2>Encontre uma escolha que faça sentido.</h2><p>${escapeHtml(body)}</p><h3>O que vale observar</h3><p>${escapeHtml(takeaway)} Compare sempre localização, registro em cartório, infraestrutura entregue e condições de pagamento direto.</p><h3>Atendimento transparente</h3><p>Entre em contato pelo WhatsApp ${WHATSAPP_SHOWN} para receber o Book Digital completo, o espelho de lotes disponíveis e agendar visita presencial acompanhada.</p></article><aside><div class="box"><p class="eyebrow">ATENDIMENTO THONY OLIVEIRA</p><h3>Receba a tabela atualizada hoje mesmo.</h3><p>Tire dúvidas sobre documentação, entrada facilitada, parcelas e localização exata dos empreendimentos em Goiânia e Goianira.</p><a href="${waHref}" target="_blank" rel="noopener noreferrer">CONVERSAR NO WHATSAPP ${WHATSAPP_SHOWN} ↗</a></div></aside></section>
-<section class="related"><p class="eyebrow">CONTINUE EXPLORANDO</p><h2>Outros caminhos para o seu próximo endereço.</h2><div class="links">${related}</div></section>
+<section class="details"><article><p class="eyebrow">ANÁLISE REGIONAL · GOIÁS</p><h2>Encontre uma escolha que faça sentido.</h2>
+<div class="tldr-box"><strong>Resumo direto (TL;DR)</strong><p>${escapeHtml(takeaway)}</p><div class="byline"><span>Curadoria: <strong>Thony Oliveira Imóveis</strong></span><span>Atualizado em <time datetime="${UPDATED_ISO}">${UPDATED_LABEL}</time></span><span>Atendimento: Goiânia, Goianira e Goiás</span></div></div>
+<p>${escapeHtml(body)}</p>
+<h3>Comparativo rápido das opções disponíveis</h3>
+<div class="compare-mini-wrap"><table class="compare-mini"><thead><tr><th>Empreendimento</th><th>Região</th><th>Modalidade</th><th>Lotes / Área</th><th>Referência*</th></tr></thead><tbody>${compareRowsHtml}</tbody></table></div>
+<h3>O que vale observar antes de fechar</h3><p>${escapeHtml(takeaway)} Compare sempre localização, registro em cartório (matrícula e decreto municipal), estágio das obras e condições de pagamento direto com a urbanizadora.</p>
+<h3>Cobertura regional em Goiás</h3><p>A Thony Oliveira Imóveis presta consultoria presencial e remota para compradores e investidores de toda a Região Metropolitana de Goiânia e do Estado de Goiás.</p>
+<div class="geo-cities">${GOIAS_CITIES.slice(0, 12).map((c) => `<span>${escapeHtml(c)} · GO</span>`).join('')}</div>
+</article><aside><div class="box"><p class="eyebrow">ATENDIMENTO THONY OLIVEIRA</p><h3>Receba a tabela atualizada hoje mesmo.</h3><p>Tire dúvidas sobre documentação em cartório, entrada facilitada, parcelas diretas e localização exata dos empreendimentos em Goiânia, Goianira e Região Metropolitana.</p><a href="${waHref}" target="_blank" rel="noopener noreferrer">CONVERSAR NO WHATSAPP ${WHATSAPP_SHOWN} ↗</a></div></aside></section>
+<section class="related"><p class="eyebrow">CONTINUE EXPLORANDO GOIÁS</p><h2>Outros guias regionais e buscas em Goiânia e Goiás.</h2><div class="links">${related}</div></section>
 <section class="faq"><p class="eyebrow">DÚVIDAS FREQUENTES</p><h2>Perguntas antes de escolher seu terreno.</h2>${faq.map(([q, a]) => `<details><summary>${escapeHtml(q)}</summary><p>${escapeHtml(a)}</p></details>`).join('')}</section>
 </main>
-<footer><strong>THONY OLIVEIRA.</strong><span>GOIÂNIA &amp; GOIANIRA · WHATSAPP ${WHATSAPP_SHOWN}${CRECI ? ` · CRECI ${escapeHtml(CRECI)}` : ''}</span><a href="/">VOLTAR PARA INÍCIO ↑</a></footer>
+<footer><strong>THONY OLIVEIRA.</strong><span>GOIÂNIA, GOIANIRA &amp; GOIÁS · WHATSAPP ${WHATSAPP_SHOWN}${CRECI ? ` · CRECI ${escapeHtml(CRECI)}` : ''}</span><a href="/">VOLTAR PARA INÍCIO ↑</a></footer>
 <a class="wa-float" href="${waHref}" target="_blank" rel="noopener noreferrer" aria-label="Conversar com Thony no WhatsApp ${WHATSAPP_SHOWN}">${WA_ICON}<span>WhatsApp</span></a>
 </body></html>`;
 }
@@ -655,22 +1016,143 @@ for (let i = 0; i < exploreData.length; i++) {
   fs.writeFileSync(path.join(folder, 'index.html'), renderExplorePage(exploreData[i], i));
 }
 
-// 4) Sitemap e robots.txt
+// 4) GEO: llms.txt e llms-full.txt para citabilidade em ChatGPT, Perplexity, Claude e Gemini
+const llmsSummary = `# Thony Oliveira Imóveis — Goiânia, Goianira e Goiás
+
+> Consultoria imobiliária especializada em loteamentos planejados e condomínios horizontais fechados em Goiânia (Região Norte, ao lado da UFG), Goianira (eixo da rodovia duplicada GO-070), Região Metropolitana de Goiânia (RMG) e Estado de Goiás.
+
+- Website oficial: ${site}/
+- WhatsApp direto: ${WHATSAPP_SHOWN} (https://wa.me/${WA})
+- Área atendida: ${GOIAS_CITIES.join(', ')} e Estado de Goiás (BR-GO)
+- Atualizado em: ${UPDATED_ISO}
+
+## Empreendimentos Oficiais em Comercialização
+
+${EMPREENDIMENTOS.map(
+  (e) =>
+    `- [${e.name}](${site}/empreendimentos/${e.slug}/): ${e.modality} em ${e.region} (${e.developers}). ${e.compare.lotes}, lotes ${e.compare.metragem}. Diferencial: ${e.compare.diferencial}. Condição referencial: ${e.priceHighlight}${e.tour360Url ? `. Tour Virtual 360°: ${e.tour360Url}` : ''}.`
+).join('\n')}
+
+## Guias Regionais de Goiás e Grande Goiânia
+
+${exploreData
+  .slice(0, 18)
+  .map((r) => `- [${r[1]}](${site}/explorar/${r[0]}/): ${r[2]}`)
+  .join('\n')}
+
+## Versão completa para modelos de IA
+- [llms-full.txt](${site}/llms-full.txt): fichas técnicas completas, registros em cartório, tempos de deslocamento e perguntas frequentes.
+`;
+
+const llmsFull = `# Thony Oliveira Imóveis — Dossiê Completo (Goiânia, Goianira e Goiás)
+
+Atualizado em: ${UPDATED_ISO}
+Website: ${site}/
+WhatsApp: ${WHATSAPP_SHOWN} (https://wa.me/${WA})
+Cobertura: Estado de Goiás, com atuação direta em ${GOIAS_CITIES.join(', ')}.
+
+---
+
+${EMPREENDIMENTOS.map(
+  (e) => `## ${e.name}
+- URL: ${site}/empreendimentos/${e.slug}/
+- Cidade / Região: ${e.city} — ${e.region}
+- Modalidade: ${e.modality} (${e.badge})
+- Realização: ${e.developers}
+- Localização: ${e.locationLine}
+- Condição referencial: ${e.priceHighlight} (${e.priceDetail})
+- Aviso legal: ${e.priceLegal}
+${e.tour360Url ? `- Tour Virtual 360° oficial: ${e.tour360Url}\n` : ''}
+### Resumo
+${e.summary.join('\n\n')}
+
+### Indicadores Principais
+${e.metrics.map((m) => `- **${m.label}:** ${m.value} (${m.sub})`).join('\n')}
+
+### Diferenciais e Lazer
+${e.amenities.map((a) => `- ${a}`).join('\n')}
+
+### Documentação e Segurança Jurídica
+- **Incorporadoras:** ${e.legal.incorporadoras}
+- **Registro / Aprovação:** ${e.legal.registro}
+- **Entrega / Obras:** ${e.legal.entrega}
+- **Endereço / Região:** ${e.legal.address}
+
+### Tempos de Deslocamento
+${e.distances.map((d) => `- ${d.time}: ${d.place}`).join('\n')}
+
+### Perguntas Frequentes
+${e.faqs.map(([q, a]) => `**${q}**\n${a}`).join('\n\n')}
+`
+).join('\n---\n\n')}
+`;
+
+fs.writeFileSync(path.join(output, 'llms.txt'), llmsSummary);
+fs.writeFileSync(path.join(output, 'llms-full.txt'), llmsFull);
+
+// 5) Sitemap (com lastmod e prioridades) e robots.txt (liberado para Google + crawlers de IA/GEO)
 if (site.startsWith('https://') && site !== 'https://example.com' && active) {
-  const urls = [
-    '/',
-    ...EMPREENDIMENTOS.map((e) => `/empreendimentos/${e.slug}/`),
-    ...exploreData.map((r) => `/explorar/${r[0]}/`),
+  const highPriorityExplore = new Set([
+    'imoveis-em-goias',
+    'loteamentos-em-goias',
+    'regiao-metropolitana-de-goiania',
+    'lotes-regiao-norte-goiania',
+    'imoveis-eixo-go-070',
+    'imoveis-em-goianira',
+    'lotes-em-goianira',
+    'condominio-fechado-goianira',
+    'terrenos-perto-ufg-goiania',
+    'imoveis-em-goiania',
+    'terrenos-a-venda-em-goiania',
+    'investir-em-terrenos-goiania-goias',
+    'melhores-condominios-horizontais-goiania-regiao',
+  ]);
+  const entries = [
+    { path: '/', priority: '1.0', freq: 'weekly' },
+    ...EMPREENDIMENTOS.map((e) => ({
+      path: `/empreendimentos/${e.slug}/`,
+      priority: '0.9',
+      freq: 'weekly',
+    })),
+    ...exploreData.map((r) => ({
+      path: `/explorar/${r[0]}/`,
+      priority: highPriorityExplore.has(r[0]) ? '0.8' : '0.7',
+      freq: 'monthly',
+    })),
   ];
   fs.writeFileSync(
     path.join(output, 'sitemap.xml'),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-      .map((p) => `<url><loc>${site}${p}</loc></url>`)
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries
+      .map(
+        (u) =>
+          `<url><loc>${site}${u.path}</loc><lastmod>${UPDATED_ISO}</lastmod><changefreq>${u.freq}</changefreq><priority>${u.priority}</priority></url>`
+      )
       .join('\n')}\n</urlset>\n`
   );
   fs.writeFileSync(
     path.join(output, 'robots.txt'),
-    `User-agent: *\nAllow: /\nSitemap: ${site}/sitemap.xml\n`
+    [
+      'User-agent: *',
+      'Allow: /',
+      '',
+      '# AI Search & Generative Engine Optimization (GEO)',
+      'User-agent: GPTBot',
+      'Allow: /',
+      'User-agent: OAI-SearchBot',
+      'Allow: /',
+      'User-agent: ChatGPT-User',
+      'Allow: /',
+      'User-agent: ClaudeBot',
+      'Allow: /',
+      'User-agent: PerplexityBot',
+      'Allow: /',
+      'User-agent: Google-Extended',
+      'Allow: /',
+      '',
+      `Sitemap: ${site}/sitemap.xml`,
+      `# LLMs guide: ${site}/llms.txt`,
+      '',
+    ].join('\n')
   );
 } else {
   fs.writeFileSync(
@@ -680,7 +1162,7 @@ if (site.startsWith('https://') && site !== 'https://example.com' && active) {
 }
 
 console.log(
-  `Páginas estáticas geradas: ${EMPREENDIMENTOS.length} empreendimentos + ${exploreData.length} páginas SEO (${
+  `Páginas estáticas geradas: ${EMPREENDIMENTOS.length} empreendimentos + ${exploreData.length} páginas SEO/GEO + llms.txt (${
     active ? 'modo produção: index,follow' : 'modo demonstrativo: noindex'
   })`
 );
