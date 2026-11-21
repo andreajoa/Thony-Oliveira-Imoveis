@@ -28,7 +28,7 @@ const chapters = [
   { eyebrow: 'CASA PRONTA', room: 'Casa pronta', detail: 'Dois andares, piscina e jardim onde antes era terra.', statement: true,
     title: ['Você conquistou.', 'Agora é só morar.'],
     text: 'Tudo começa com o terreno certo. Fale com Thony e encontre o seu em Goiânia e região.',
-    cta: { label: 'VER TERRENOS À VENDA', href: '/explorar/terrenos-a-venda-em-goiania/' } },
+    cta: { label: 'CONHECER OS 4 EMPREENDIMENTOS', href: '#imoveis' } },
 ].map((c, i) => ({ ...c, at: at(i), rest: rest(i), eyebrow: `ETAPA ${String(i + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')} · ${c.eyebrow}` }));
 
 function Blueprint() {

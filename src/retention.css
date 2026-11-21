@@ -85,4 +85,4 @@
 @media(prefers-reduced-motion:reduce){.hero-right img.hero-door{transform:none}}
 
 /* hero: abre espaço para o botão do WhatsApp no canto inferior direito */
-@media(min-width:901px){.hero .hero-right .hero-image-caption{bottom:110px}.hero .hero-right .hero-image-legal{right:auto;left:clamp(24px,3.5vw,65px)}}
+@media(min-width:901px){.hero .hero-right .hero-image-caption{bottom:108px}.hero .hero-right .hero-image-legal{right:auto;left:clamp(24px,3.5vw,65px);bottom:28px}}

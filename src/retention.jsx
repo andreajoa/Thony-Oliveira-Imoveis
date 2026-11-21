@@ -43,8 +43,9 @@ export function useReveal() {
 
 // seção atual (compartilhada pelo índice lateral, pela barra do celular e pelo índice do hero)
 export const SECTIONS = [
-  ['inicio', 'Início'], ['busca', 'Busca'], ['imoveis', 'Seleção'], ['visita-imersiva', 'Entre na casa'],
-  ['bairros', 'Bairros'], ['terreno-ganha-vida', 'Terreno → casa'], ['sobre', 'Sobre'], ['explorar', 'Explorar'], ['duvidas', 'Dúvidas'], ['contato', 'Contato'],
+  ['inicio', 'Início'], ['busca', 'Busca'], ['imoveis', 'Empreendimentos'], ['comparativo', 'Comparativo'],
+  ['terreno-ganha-vida', 'Terreno → casa'], ['visita-imersiva', 'Entre na casa'],
+  ['bairros', 'Regiões'], ['sobre', 'Sobre'], ['explorar', 'Explorar'], ['duvidas', 'Dúvidas'], ['contato', 'Contato'],
 ];
 const IMMERSIVE = new Set(['visita-imersiva', 'terreno-ganha-vida']);
 
