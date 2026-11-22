@@ -133,6 +133,11 @@ export default function LeadPopup({ forceOpen = false }) {
 
   if (!featured) return null;
 
+  const selectedDev = EMPREENDIMENTOS.find((x) => x.slug === interest) || null;
+  const waSuccessMessage = selectedDev
+    ? `Olá, Thony! Acabei de me cadastrar no site e quero receber informações do ${selectedDev.name}.`
+    : 'Olá, Thony! Acabei de me cadastrar no site e quero receber informações dos empreendimentos disponíveis em Goiânia e Goianira.';
+
   return (
     <>
       <button
@@ -230,21 +235,24 @@ export default function LeadPopup({ forceOpen = false }) {
                   <CheckCircle2 size={32} />
                   <h3>Inscrição confirmada! Confira sua caixa de entrada.</h3>
                   <p>
-                    Enviamos agora para o seu e-mail a apresentação completa do{' '}
-                    <strong>{featured.name}</strong> e o comparativo oficial dos nossos 4
-                    empreendimentos em Goiânia e Goianira.
+                    Enviamos agora para o seu e-mail a apresentação completa{' '}
+                    {selectedDev ? (
+                      <>
+                        do <strong>{selectedDev.name}</strong>
+                      </>
+                    ) : (
+                      <>dos nossos 4 empreendimentos</>
+                    )}{' '}
+                    e o comparativo oficial em Goiânia e Goianira.
                   </p>
                   <div className="lead-popup-success-actions">
                     <a
                       className="lead-popup-submit"
-                      href={waLink(
-                        `Olá, Thony! Acabei de me cadastrar no pop-up do site e quero receber a tabela atualizada do ${featured.name}.`,
-                        WHATSAPP_DEFAULT
-                      )}
+                      href={waLink(waSuccessMessage, WHATSAPP_DEFAULT)}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      RECEBER TABELA NO WHATSAPP AGORA <ArrowUpRight size={16} />
+                      RECEBER INFORMAÇÕES NO WHATSAPP AGORA <ArrowUpRight size={16} />
                     </a>
                     <button type="button" className="lead-popup-secondary" onClick={handleClose}>
                       Continuar navegando no site
