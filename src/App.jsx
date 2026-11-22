@@ -168,16 +168,16 @@ function Hero() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let cancelled = false;
     let timer;
-    const scheduleNext = (current) => {
-      const delay = current === 0 ? 4500 : 6500;
+    const scheduleNext = (current, isFirst = false) => {
+      const delay = current === 0 ? (isFirst ? 6000 : 4800) : 6500;
       timer = setTimeout(() => {
         if (cancelled) return;
         const next = current === 0 ? 1 : 0;
         setHeroSlide(next);
-        scheduleNext(next);
+        scheduleNext(next, false);
       }, delay);
     };
-    scheduleNext(0);
+    scheduleNext(0, true);
     return () => {
       cancelled = true;
       clearTimeout(timer);

@@ -10,23 +10,172 @@
 <meta name="geo.placename" content="Goiânia, Goiás" />
 <meta name="geo.position" content="-16.6869;-49.2648" />
 <meta name="ICBM" content="-16.6869, -49.2648" />
-<meta name="description" content="Thony Oliveira Imóveis: lotes em condomínio fechado e loteamentos planejados em Goiânia (ao lado da UFG), Goianira (GO-070), Região Metropolitana e Goiás. Parque Universitário, Terraví Ipês, Condomínio Pinheiros e Flora Nogueira." />
+<meta name="description" content="Thony Oliveira Imóveis: Condomínio Horizontal Pinheiros em destaque com parcelas a partir de R$ 654,19*, lotes ao lado da UFG em Goiânia e condomínios na GO-070 em Goianira." />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="pt_BR" />
 <meta property="og:site_name" content="Thony Oliveira Imóveis" />
 <meta property="og:url" content="https://thonyoliveiraimoveis.online/" />
-<meta property="og:title" content="Thony Oliveira Imóveis | Lotes, Terrenos e Condomínios em Goiânia, Goianira e Goiás" />
-<meta property="og:description" content="Compare 4 empreendimentos registrados em Goiânia (UFG) e Goianira (GO-070): Parque Universitário, Terraví Ipês (com Tour 360°), Condomínio Pinheiros e Flora Nogueira." />
-<meta property="og:image" content="https://thonyoliveiraimoveis.online/empreendimentos/parque-universitario/01-aerea-ufg.webp" />
+<meta property="og:title" content="Thony Oliveira Imóveis | Condomínio Pinheiros a partir de R$ 654,19* · Goiânia e Goiás" />
+<meta property="og:description" content="Em destaque: Condomínio Horizontal Pinheiros (parcelas a partir de R$ 654,19*), Parque Universitário (UFG Goiânia), Terraví Ipês (Tour 360°) e Flora Nogueira." />
+<meta property="og:image" content="https://thonyoliveiraimoveis.online/empreendimentos/condominio-pinheiros/01-portaria.webp" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Thony Oliveira Imóveis | Loteamentos e Condomínios em Goiânia e Goiás" />
-<meta name="twitter:description" content="Terrenos a partir de 230 m² em Goiânia (UFG) e Goianira (GO-070) com registro em cartório e parcelamento direto." />
-<meta name="twitter:image" content="https://thonyoliveiraimoveis.online/empreendimentos/parque-universitario/01-aerea-ufg.webp" />
+<meta name="twitter:description" content="Condomínio Pinheiros com parcelas a partir de R$ 654,19* e lotes registrados em Goiânia e Goianira." />
+<meta name="twitter:image" content="https://thonyoliveiraimoveis.online/empreendimentos/condominio-pinheiros/01-portaria.webp" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
 <title>Thony Oliveira Imóveis — Lotes e Condomínios em Goiânia, Goianira e Goiás</title>
+<style id="thony-splash-style">
+  #thony-splash{
+    position:fixed;inset:0;z-index:9999;
+    display:flex;align-items:center;justify-content:center;
+    padding:28px;
+    background:radial-gradient(circle at 50% 34%,#1d4337 0%,#132c24 58%,#0c1f19 100%);
+    color:#f7f5ef;
+    overflow:hidden;
+    transition:opacity .72s cubic-bezier(.22,1,.36,1),transform .72s cubic-bezier(.22,1,.36,1),visibility .72s;
+  }
+  #thony-splash::before{
+    content:'';position:absolute;inset:18px;
+    border:1px solid rgba(227,188,136,.16);
+    pointer-events:none;
+  }
+  #thony-splash.is-leaving{
+    opacity:0;transform:scale(1.018);visibility:hidden;pointer-events:none;
+  }
+  .ts-inner{
+    position:relative;z-index:2;max-width:740px;width:100%;
+    text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;
+    animation:tsRise .75s cubic-bezier(.22,1,.36,1) both;
+  }
+  .ts-brand{
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .ts-mark{
+    width:44px;height:44px;display:grid;place-items:center;
+    border:1px solid rgba(227,188,136,.42);
+    background:rgba(247,245,239,.04);
+    color:#f1dbb5;font-family:'Playfair Display',Georgia,serif;
+    font-size:20px;letter-spacing:-.14em;border-radius:2px;
+  }
+  .ts-brand-text{
+    text-align:left;display:flex;flex-direction:column;gap:3px;
+  }
+  .ts-brand-text b{
+    font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:12px;letter-spacing:.26em;font-weight:800;color:#f7f5ef;
+  }
+  .ts-brand-text small{
+    font-family:'DM Sans',-apple-system,sans-serif;
+    font-size:9px;letter-spacing:.24em;font-weight:700;color:#d6b58b;
+  }
+  .ts-hook{
+    margin:6px 0 0;
+    font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:clamp(30px,4.8vw,58px);
+    line-height:1.12;letter-spacing:-.045em;font-weight:500;
+    color:#f7f5ef;
+  }
+  .ts-hook em{
+    font-family:'Playfair Display',Georgia,serif;
+    font-style:italic;font-weight:400;color:#e3bc88;
+    letter-spacing:-.02em;
+  }
+  .ts-sub{
+    margin:0;max-width:480px;
+    font-family:'DM Sans',-apple-system,sans-serif;
+    font-size:13.5px;line-height:1.75;color:rgba(241,237,226,.76);
+    letter-spacing:.01em;
+  }
+  .ts-divider{
+    width:46px;height:1px;background:rgba(227,188,136,.45);
+  }
+  .ts-signature{
+    font-family:'Manrope',-apple-system,sans-serif;
+    font-size:10px;letter-spacing:.28em;font-weight:800;
+    color:#e3bc88;text-transform:uppercase;
+  }
+  .ts-bar{
+    width:140px;height:1.5px;background:rgba(247,245,239,.14);
+    overflow:hidden;border-radius:2px;margin-top:4px;
+  }
+  .ts-bar i{
+    display:block;height:100%;width:100%;
+    background:linear-gradient(90deg,#b58a5f,#f1dbb5);
+    transform-origin:left center;
+    animation:tsLoad 1.55s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  @keyframes tsRise{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes tsLoad{
+    from{transform:scaleX(0)}
+    to{transform:scaleX(1)}
+  }
+  @media(max-width:600px){
+    #thony-splash::before{inset:12px}
+    .ts-inner{gap:16px}
+    .ts-sub{font-size:12.5px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .ts-inner,.ts-bar i{animation:none}
+  }
+</style>
 </head>
-<body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
+<body>
+<div id="thony-splash" role="status" aria-live="polite">
+  <div class="ts-inner">
+    <div class="ts-brand">
+      <span class="ts-mark">T·O</span>
+      <span class="ts-brand-text">
+        <b>THONY OLIVEIRA</b>
+        <small>IMÓVEIS · GOIÂNIA &amp; GOIÁS</small>
+      </span>
+    </div>
+    <p class="ts-hook" id="thony-splash-hook">Onde o sonho da sua família <em>ganha endereço.</em></p>
+    <p class="ts-sub">Terrenos e condomínios selecionados para construir patrimônio, liberdade e grandes histórias em Goiás.</p>
+    <span class="ts-divider"></span>
+    <span class="ts-signature">Thony Oliveira · Consultoria Imobiliária</span>
+    <span class="ts-bar"><i></i></span>
+  </div>
+</div>
+<script>
+(function(){
+  try {
+    var hooks = [
+      'Onde o sonho da sua família <em>ganha endereço.</em>',
+      'O terreno certo hoje é a história que sua família <em>vai viver amanhã.</em>',
+      'Mais que um lote — o cenário dos seus <em>próximos grandes capítulos.</em>'
+    ];
+    var idx = Number(sessionStorage.getItem('thony_splash_idx') || '0');
+    var el = document.getElementById('thony-splash-hook');
+    if (el) el.innerHTML = hooks[idx % hooks.length];
+    sessionStorage.setItem('thony_splash_idx', String((idx + 1) % hooks.length));
+  } catch (e) {}
+  var splash = document.getElementById('thony-splash');
+  if (!splash) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dwell = reduced ? 220 : 1550;
+  var start = Date.now();
+  var dismissed = false;
+  function dismiss() {
+    if (dismissed) return;
+    dismissed = true;
+    var wait = Math.max(0, dwell - (Date.now() - start));
+    setTimeout(function() {
+      splash.classList.add('is-leaving');
+      setTimeout(function() {
+        if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+      }, 760);
+    }, wait);
+  }
+  if (document.readyState === 'complete') dismiss();
+  else window.addEventListener('load', dismiss, { once: true });
+  setTimeout(dismiss, 2400);
+})();
+</script>
+<div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
 </html>
